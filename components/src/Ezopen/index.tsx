@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface EzopenPlayerProps {
   schema: any;
   onSchemaChange: (schema: any) => void;

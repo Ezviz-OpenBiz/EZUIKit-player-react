@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface HlsPlayerProps {
   schema: any;
   onSchemaChange: (schema: any) => void;

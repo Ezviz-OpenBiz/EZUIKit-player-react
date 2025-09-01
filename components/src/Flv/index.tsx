@@ -1,3 +1,4 @@
+import React from 'react';
 export interface FlvPlayerProps {
   schema: any;
   onSchemaChange: (schema: any) => void;

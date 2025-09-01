@@ -21,5 +21,9 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^18.3.1",
     "@config/rollup": "workspace:*"
+  },
+  "engines": {
+    "node": ">=16",
+    "react": ">=16.8"
   }
 }
