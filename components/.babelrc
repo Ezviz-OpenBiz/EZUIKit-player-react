@@ -1,0 +1,18 @@
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    // [
+    //   "import",
+    //   {
+    //     "libraryName": "antd",
+    //     "libraryDirectory": "es",
+    //     "style": true // 加载less文件
+    //   }
+    // ]
+    // [
+    //   "import",
+    //   { "libraryName": "antd-mobile", "libraryDirectory": "dist", "style": "css" },
+    //   "antd-mobile"
+    // ]
+  ]
+}
