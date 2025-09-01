@@ -1,7 +1,7 @@
-import React, { useCallback, useRef } from "react";
-import { EZUIKitPlayer } from "ezuikit-js";
-import { isMobile } from "./utils";
-import "./index.css";
+import React, { useCallback, useRef } from 'react';
+// import { EZUIKitPlayer } from "ezuikit-js";
+import { isMobile } from './utils';
+import './index.css';
 
 const Player = () => {
   const player = useRef<any>(null);
@@ -13,19 +13,19 @@ const Player = () => {
   const templateRef = useRef<HTMLSelectElement>(null);
 
   const initPlayer = useCallback(() => {
-    if (document.getElementById("player-container")) {
+    if (document.getElementById('player-container')) {
       let width = 600;
       let height = 400;
 
       const url = urlRef.current?.value.trim();
       const accessToken = accessTokenRef.current?.value.trim();
       const staticPath = staticPathRef.current?.value.trim() || undefined;
-      const domain = domainRef.current?.value.trim() || "https://open.ys7.com";
+      const domain = domainRef.current?.value.trim() || 'https://open.ys7.com';
       const language = languageRef.current?.value.trim();
       const template = templateRef.current?.value.trim();
 
       if (!url || !accessToken) {
-        console.warn("url or accessToken is empty!");
+        console.warn('url or accessToken is empty!');
         return;
       }
 
@@ -39,78 +39,78 @@ const Player = () => {
         player.current = null;
       }
 
-      player.current = new EZUIKitPlayer({
-        id: "player-container",
-        url,
-        accessToken,
-        width,
-        height,
-        template,
-        staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
-        // quality: 1, // 
-        language, // zh | en
-        // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
-        env: {
-          // https://open.ys7.com/help/1772?h=domain
-          // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
-          // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
-          domain, // "https://open.ys7.com"
-        },
-        plugin: ["talk"], // 加载插件，talk-对讲
-        // 日志打印设置
-        loggerOptions: {
-          // player.setLoggerOptions(options)
-          level: "INFO", // INFO LOG  WARN  ERROR
-          name: "ezuikit",
-          showTime: true,
-        },
-        // 视频流的信息回调类型
-        /**
-         * 打开流信息回调，监听 streamInfoCB 事件
-         * 0 : 每次都回调
-         * 1 : 只回调一次
-         * 注意：会影响性能
-         * 默认值 1
-         */
-        streamInfoCBType: 1,
-        // v8.1.10
-        // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
-        // videoLevelList: [
-        //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
-        //   { level: 2, name: "高清", streamTypeIn: 1 },
-        // ],
-      });
+      // player.current = new EZUIKitPlayer({
+      //   id: "player-container",
+      //   url,
+      //   accessToken,
+      //   width,
+      //   height,
+      //   template,
+      //   staticPath, // 如果想使用本地静态资源，请复制根目录下ezuikit_static 到当前目录下， 然后设置该值
+      //   // quality: 1, //
+      //   language, // zh | en
+      //   // isCloudRecord: true, // 如果是云录制的播放 需要这个值，是必须的
+      //   env: {
+      //     // https://open.ys7.com/help/1772?h=domain
+      //     // domain默认是 https://open.ys7.com, 如果是私有化部署或海外的环境，请配置对应的domain
+      //     // The default domain is https://open.ys7.com If it is a private deployment or overseas (outside of China) environment, please configure the corresponding domain
+      //     domain, // "https://open.ys7.com"
+      //   },
+      //   plugin: ["talk"], // 加载插件，talk-对讲
+      //   // 日志打印设置
+      //   loggerOptions: {
+      //     // player.setLoggerOptions(options)
+      //     level: "INFO", // INFO LOG  WARN  ERROR
+      //     name: "ezuikit",
+      //     showTime: true,
+      //   },
+      //   // 视频流的信息回调类型
+      //   /**
+      //    * 打开流信息回调，监听 streamInfoCB 事件
+      //    * 0 : 每次都回调
+      //    * 1 : 只回调一次
+      //    * 注意：会影响性能
+      //    * 默认值 1
+      //    */
+      //   streamInfoCBType: 1,
+      //   // v8.1.10
+      //   // 自定义清晰度 默认 null, 如果有值 sdk 内部不在进行获取, null 默认使用接口获取的清晰度列表, videoLevelList.length === 0 不展示清晰度控件 sdk 内部不在进行获取, videoLevelList.length > 0 展示控件 sdk 内部不在进行获取
+      //   // videoLevelList: [
+      //   //   { level: 1, name: "标清", streamTypeIn: 2 }, // 需要保证支持子码流 (streamTypeIn=2)
+      //   //   { level: 2, name: "高清", streamTypeIn: 1 },
+      //   // ],
+      // });
 
-      (window as any).player = player.current;
+      // (window as any).player = player.current;
 
-      player.current.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.videoInfo,
-        (info: any) => {
-          console.log("videoinfo", info);
-        },
-      );
+      // player.current.eventEmitter.on(
+      //   EZUIKitPlayer.EVENTS.videoInfo,
+      //   (info: any) => {
+      //     console.log("videoinfo", info);
+      //   },
+      // );
 
-      player.current.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.audioInfo,
-        (info: any) => {
-          console.log("audioInfo", info);
-        },
-      );
+      // player.current.eventEmitter.on(
+      //   EZUIKitPlayer.EVENTS.audioInfo,
+      //   (info: any) => {
+      //     console.log("audioInfo", info);
+      //   },
+      // );
 
       // 首帧渲染成功
       // first frame display
-      player.current.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.firstFrameDisplay,
-        () => {
-          console.log("firstFrameDisplay ");
-        },
-      );
-      player.current.eventEmitter.on(
-        EZUIKitPlayer.EVENTS.streamInfoCB,
-        (info: any) => {
-          console.log("streamInfoCB ", info);
-        },
-      );
+      // player.current.eventEmitter.on(
+      //   EZUIKitPlayer.EVENTS.firstFrameDisplay,
+      //   () => {
+      //     console.log("firstFrameDisplay ");
+      //   },
+      // );
+      // player.current.eventEmitter.on(
+      //   EZUIKitPlayer.EVENTS.streamInfoCB,
+      //   (info: any) => {
+      //     console.log("streamInfoCB ", info);
+      //   },
+      // );
     }
   }, []);
 
@@ -221,11 +221,7 @@ const Player = () => {
           <label>staticPath</label>
           {/* prettier-ignore */}
           {/* https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static */}
-          <input
-            ref={staticPathRef}
-            placeholder="ezopen staticPath"
-            defaultValue=""
-          />
+          <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="" />
         </div>
         <div className="form-item">
           <label>domain</label>
