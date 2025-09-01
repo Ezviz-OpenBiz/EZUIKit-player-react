@@ -3,15 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pnpm run --filter @live/playground dev",
+    "start": "pnpm run --filter @examples/with-vite dev",
     "dev": "pnpm run start",
-    "dev:common": "pnpm run --parallel --filter @common/* dev",
-    "dev:packages": "pnpm run --parallel --filter @pkg/* dev",
-    "build": "pnpm run build:common && pnpm run build:packages && pnpm run build:playground",
-    "build:common": "pnpm run --filter @common/* build",
-    "build:packages": "pnpm run --filter @pkg/* build",
-    "build:playground": "pnpm run --filter @live/playground build",
-    "server": "pnpm run --filter @live/playground server",
+    "build": "pnpm run --filter @ezuikit/player-react build",
+    "build:examples": "pnpm run --filter @examples/* build",
     "lint": "eslint --fix \"packages/*/src/*.{ts,tsx,js,jsx,mjs}\" \"common/*/src/*.{ts,tsx,js,jsx,mjs}\" \"playground/src/*.{ts,tsx,js,jsx,mjs}\"",
     "fmt": "prettier --write \"./**/*.{ts,tsx,js,jsx}\"",
     "preinstall": "npx only-allow pnpm"
