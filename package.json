@@ -3,22 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pnpm run --filter @examples/with-vite dev",
+    "start": "pnpm run --filter with-vite dev",
     "dev": "pnpm run start",
     "build": "pnpm run --filter @ezuikit/player-react build",
-    "build:examples": "pnpm run --filter @examples/* build",
+    "build:examples": "pnpm run --filter with-* build",
     "lint": "eslint --fix \"packages/*/src/*.{ts,tsx,js,jsx,mjs}\" \"common/*/src/*.{ts,tsx,js,jsx,mjs}\" \"playground/src/*.{ts,tsx,js,jsx,mjs}\"",
     "fmt": "prettier --write \"./**/*.{ts,tsx,js,jsx}\"",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
     "eslint-config-xx": "^1.10.1",
-    "@skax/craco": "^7.1.0-beta.3",
-    "@skax/craco-less": "^3.0.1-beta.1",
-    "@skax/react-scripts": "5.0.1-beta.4",
     "@types/lodash-es": "^4.17.12",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^18.3.1",
     "babel-plugin-import": "^1.13.8",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
@@ -28,19 +23,18 @@
     "lodash-es": "^4.17.21",
     "only-allow": "^1.2.1",
     "prettier": "2.8.8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rimraf": "^5.0.5",
     "rollup": "^4.24.4",
     "tslib": "^2.8.1",
     "typescript": "5.3.3"
   },
-  "resolutions": {
-    "es5-ext": "0.10.53"
-  },
   "engines": {
     "node": ">=16",
     "pnpm": ">=8",
     "react": ">=16.8"
+  },
+  "resolutions": {
+    "es5-ext": "0.10.53",
+    "@types/react": "17.0.14"
   }
 }

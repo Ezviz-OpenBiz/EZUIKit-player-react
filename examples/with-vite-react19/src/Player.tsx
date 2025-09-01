@@ -126,7 +126,6 @@ const Player = () => {
     <div className="player-wrapper">
       <h2>ezopen使用示例 (Example of using ezopen)：</h2>
       <div>
-        {/* https://stackoverflow.com/questions/71831601/ts2786-component-cannot-be-used-as-a-jsx-component */}
         <EzopenPlayer
           template="pcLive"
           id="player-container"
@@ -135,9 +134,7 @@ const Player = () => {
           width={600}
           height={400}
           ref={player}
-        >
-          1
-        </EzopenPlayer>
+        />
       </div>
       <div className="form">
         <div className="form-item">

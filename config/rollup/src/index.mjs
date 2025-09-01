@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import postcss from 'rollup-plugin-postcss';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
+import copy from 'rollup-plugin-copy';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -75,6 +76,24 @@ function generateConfig(pkg, configs) {
       ...entry,
       external: ['react/jsx-runtime', 'react', 'react-dom', ...externals],
       plugins: [
+        copy({
+          targets: [
+            {
+              src: 'node_modules/ezuikit-js/ezuikit_static/*',
+              dest: `dist/ezuikit_static`,
+            },
+            {
+              src: 'node_modules/ezuikit-flv/decoder.*',
+              dest: `dist/flv_decoder`,
+            },
+            {
+              src: 'node_modules/@ezuikit/player-hls/dist/decoder.*',
+              dest: `dist/hls_decoder`,
+            },
+          ].filter(Boolean),
+          verbose: true, // Output copied items to console.
+          copyOnce: true, //  Copy items once. Useful in watch mode.
+        }),
         // eslint({
         //   throwOnError: true, // lint 结果有错误将会抛出异常
         //   // throwOnWarning: true,

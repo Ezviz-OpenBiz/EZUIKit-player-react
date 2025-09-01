@@ -2,9 +2,9 @@ name: build-demos
 
 on:
   push:
-    branches: ["main", "develop"]
+    branches: ['main', 'develop']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   build:
@@ -24,12 +24,17 @@ jobs:
         with:
           version: 8
 
+      - name: Build Components
+        working-directory: ./components
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm run build
+
       - name: Build with-webpack
         working-directory: ./examples/with-webpack
         run: |
           pnpm install --no-frozen-lockfile
           pnpm run build
-
 
       - name: Build with-vite
         working-directory: ./examples/with-vite

@@ -24,6 +24,12 @@ jobs:
         with:
           version: 8
 
+      - name: Build Components
+        working-directory: ./components
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm run build
+
       - name: Build with-next
         working-directory: ./examples/with-next
         run: |

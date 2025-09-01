@@ -31,3 +31,7 @@ stats.html
 *.njsproj
 *.sln
 *.sw?
+
+ezuikit_static/
+flv_decoder/
+hls_decoder/

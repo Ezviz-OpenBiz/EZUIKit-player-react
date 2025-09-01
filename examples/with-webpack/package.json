@@ -1,5 +1,5 @@
 {
-  "name": "react-demo",
+  "name": "with-webpack",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
