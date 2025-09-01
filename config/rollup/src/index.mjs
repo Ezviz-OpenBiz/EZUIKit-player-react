@@ -43,12 +43,6 @@ function generateConfig(pkg, configs) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const externals = Object.keys(pkg?.dependencies || {});
 
-  // prettier-ignore
-  // const exportName = upperCamel(pkg?.name?.split('/').length > 1 ? pkg?.name?.split('/')[pkg?.name?.split('/').length - 1] : pkg?.name, '-');
-
-  // prettier-ignore
-  // const umdPath = path.resolve(`../../playground/public/components/${pkg?.name.replace('@pkg/', '')}/components.umd.js`);
-
   const defaultConfigs = [
     {
       input,
@@ -58,9 +52,9 @@ function generateConfig(pkg, configs) {
           file: 'dist/index.mjs',
           format: 'esm',
           sourcemap: isDev,
-          banner
-        }
-      ]
+          banner,
+        },
+      ],
     },
     {
       input,
@@ -70,10 +64,10 @@ function generateConfig(pkg, configs) {
           file: 'dist/index.js',
           format: 'commonjs',
           sourcemap: isDev,
-          banner
-        }
-      ]
-    }
+          banner,
+        },
+      ],
+    },
   ];
 
   return [
