@@ -72,6 +72,8 @@ jobs:
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
           if [[ "$TAG" =~ -beta ]]; then
             echo "::set-output name=tag::beta"
+          elif [[ "$TAG" =~ -alpha ]]; then
+            echo "::set-output name=tag::alpha"
           elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::set-output name=tag::latest"
           else
