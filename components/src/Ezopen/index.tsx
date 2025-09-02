@@ -31,6 +31,8 @@ export interface EzopenPlayerProps {
   env?: {
     /**
      * 接口域名， 默认是 https://open.ys7.com
+     *
+     * https://github.com/Ezviz-OpenBiz/EZUIKit-JavaScript-npm?tab=readme-ov-file#%E8%BD%BB%E5%BA%94%E7%94%A8---%E6%B5%B7%E5%A4%96%E7%89%88%E6%9C%AC
      */
     domain?: string;
   };
