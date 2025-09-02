@@ -12,27 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-        # # 设置 pnpm
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
 
-      # 设置 Node
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: npm
-          registry-url: https://registry.npmjs.org
       # 安装依赖
       - name: Install dependencies
+        working-directory: ./components
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm run build
 
       - name: Check file versions
+        working-directory: ./components
         run: |
           files="dist/ezuikit.js dist/index.js dist/index.mjs package.json"
 
@@ -70,6 +66,7 @@ jobs:
 
       # 获取 tag 的版本类型（仅支持 正式版和beta版）
       - name: Determine release tag
+        working-directory: ./components
         id: determine_tag
         run: |
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
@@ -86,6 +83,7 @@ jobs:
       #   run: pnpm run build
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
+        working-directory: ./components
         run: npm publish --tag ${{ steps.determine_tag.outputs.tag }}
         env:
           # 这里需要几个 Token 变量
