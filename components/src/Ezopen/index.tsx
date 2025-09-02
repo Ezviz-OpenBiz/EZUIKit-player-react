@@ -41,6 +41,7 @@ export interface EzopenPlayerProps {
 }
 
 export interface EzopenPlayerRef {
+  player: () => EZUIKitPlayer | null;
   play: () => void;
   stop: () => void;
   destroy: () => void;
@@ -82,6 +83,7 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
   }, [props.id, props.url, props.accessToken, props.token]); // 添加依赖项
 
   useImperativeHandle(ref, () => ({
+    player: () => player.current,
     stop: () => {
       if (player.current) {
         player.current.stop?.();
