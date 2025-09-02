@@ -30,7 +30,7 @@ jobs:
       - name: Check file versions
         working-directory: ./components
         run: |
-          files="dist/ezuikit.js dist/index.js dist/index.mjs package.json"
+          files="dist/index.js dist/index.mjs package.json"
 
           version=""
           inconsistent=false
