@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/player-react",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "description": "",
   "main": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
@@ -12,6 +12,10 @@
     "clean": "rimraf dist"
   },
   "keywords": [],
+  "files": [
+    "dist",
+    "src"
+  ],
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "",
   "dependencies": {
@@ -20,8 +24,6 @@
     "@ezuikit/player-hls": "0.1.0"
   },
   "devDependencies": {
-    "react": "^16.8",
-    "react-dom": "^16.8",
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.14",
     "@config/rollup": "workspace:*",
@@ -34,5 +36,8 @@
   "resolutions": {
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.14"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
