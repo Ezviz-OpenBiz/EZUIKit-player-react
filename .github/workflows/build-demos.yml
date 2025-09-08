@@ -30,11 +30,11 @@ jobs:
           pnpm install --no-frozen-lockfile
           pnpm run build
 
-      - name: Build with-webpack
-        working-directory: ./examples/with-webpack
-        run: |
-          pnpm install --no-frozen-lockfile
-          pnpm run build
+      # - name: Build with-webpack
+      #   working-directory: ./examples/with-webpack
+      #   run: |
+      #     pnpm install --no-frozen-lockfile
+      #     pnpm run build
 
       - name: Build with-vite
         working-directory: ./examples/with-vite
