@@ -29,7 +29,7 @@ jobs:
       - name: Check file versions
         working-directory: ./components
         run: |
-          files="dist/index.js dist/index.mjs components/package.json"
+          files="dist/index.js dist/index.mjs package.json"
 
           version=""
           inconsistent=false
@@ -63,23 +63,10 @@ jobs:
 
           echo "所有文件版本号一致: $version"
 
-      # # 设置 pnpm
-      # - name: Setup PNPM
-      #   uses: pnpm/action-setup@v2
-      #   with:
-      #     version: 8
-      # 设置 Node
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        working-directory: ./components
-        with:
-          node-version: 18
-          cache: npm
-          registry-url: https://registry.npmjs.org
       # 安装依赖
       - name: Install dependencies
         working-directory: ./components
-        run: npm install
+        run: pnpm install --no-frozen-lockfile
 
       # 获取 tag 的版本类型（仅支持 正式版、beta版和alpha 版）
       - name: Determine release tag
@@ -88,7 +75,7 @@ jobs:
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
           if [[ "$TAG" =~ -beta ]]; then
             echo "::set-output name=tag::beta"
-          if [[ "$TAG" =~ -alpha ]]; then
+          elif [[ "$TAG" =~ -alpha ]]; then
             echo "::set-output name=tag::alpha"
           elif [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::set-output name=tag::latest"
