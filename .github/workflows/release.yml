@@ -29,7 +29,7 @@ jobs:
       - name: Check file versions
         working-directory: ./components
         run: |
-          files="dist/index.js dist/index.mjs components/package.json"
+          files="dist/index.js dist/index.mjs package.json"
 
           version=""
           inconsistent=false
