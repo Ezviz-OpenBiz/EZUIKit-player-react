@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, type ForwardRefRenderFunction } from 'react';
 import { EZUIKitPlayer } from 'ezuikit-js';
 import useResizeObserver from '../hooks/useResizeObserver';
 
@@ -53,6 +53,7 @@ export interface EzopenPlayerRef {
   destroy: () => void;
   on: (event: string, callback: (...args: any[]) => void) => void;
   // $emit 支持泛行 保留ts能力
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   $emit: <T = any>(event: string, ...args: any) => Promise<T> | void | string | T;
 }
 
@@ -97,7 +98,7 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     };
   }, [props.id, props.url, props.accessToken, props.token]); // 添加依赖项
 
-  props.isAutoSize && useResizeObserver(player, props.playerParentContainerId as string);
+  useResizeObserver(player, props.playerParentContainerId as string);
 
   useImperativeHandle(ref, () => ({
     player: () => {
@@ -131,7 +132,7 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     },
   }));
 
-  return <div ref={containerRef} id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }}  />;
+  return <div ref={containerRef} id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }} />;
 };
 
 // 使用 React.forwardRef 并明确类型
