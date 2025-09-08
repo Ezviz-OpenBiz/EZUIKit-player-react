@@ -1,10 +1,12 @@
 import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
 import { EZUIKitPlayer } from 'ezuikit-js';
+import useResizeObserver from '../hooks/useResizeObserver';
 
 /**
  * 播放器组件 Props
  */
-export interface EzopenPlayerProps {
+// extends Record<string, any>  请保留 强化 ...props 能力
+export interface EzopenPlayerProps extends Record<string, any> {
   /** 播放器 id, 必须的 */
   id: string;
   /** ezopen 播放地址 */
@@ -38,6 +40,10 @@ export interface EzopenPlayerProps {
   };
   className?: string;
   style?: React.CSSProperties;
+  // 播放器是否自动适配容器宽高
+  isAutoSize?: boolean;
+  // 自动播放器父容器
+  playerParentContainerId?: string;
 }
 
 export interface EzopenPlayerRef {
@@ -45,6 +51,9 @@ export interface EzopenPlayerRef {
   play: () => void;
   stop: () => void;
   destroy: () => void;
+  on: (event: string, callback: (...args: any[]) => void) => void;
+  // $emit 支持泛行 保留ts能力
+  $emit: <T = any>(event: string, ...args: any) => Promise<T> | void | string | T;
 }
 
 const DEFAULT_PROPS = {
@@ -53,7 +62,7 @@ const DEFAULT_PROPS = {
 
 // 使用 ForwardRefRenderFunction 明确类型
 const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWithChildren<EzopenPlayerProps>> = (props, ref) => {
-  const player = useRef<any>(null);
+  const player = useRef<EZUIKitPlayer | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,7 +79,13 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     }
 
     if (containerRef.current && !player.current) {
-      const opt = { ...DEFAULT_PROPS, ...props };
+      let opt = { ...DEFAULT_PROPS, ...props };
+      if (props.isAutoSize) {
+        const width = containerRef.current?.offsetWidth;
+        const height = width * (9 / 16);
+        opt = { ...opt, width, height };
+      }
+
       player.current = new EZUIKitPlayer(opt);
     }
 
@@ -82,8 +97,12 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     };
   }, [props.id, props.url, props.accessToken, props.token]); // 添加依赖项
 
+  props.isAutoSize && useResizeObserver(player, props.playerParentContainerId as string);
+
   useImperativeHandle(ref, () => ({
-    player: () => player.current,
+    player: () => {
+      return player.current;
+    },
     stop: () => {
       if (player.current) {
         player.current.stop?.();
@@ -100,9 +119,19 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
         player.current = null;
       }
     },
+    on: (event, callback) => {
+      if (player.current) {
+        player.current?.eventEmitter.on(event, callback);
+      }
+    },
+    $emit: (event, ...args) => {
+      if (player.current) {
+        return player.current?.[event]?.(...args);
+      }
+    },
   }));
 
-  return <div ref={containerRef} id={props.id} className={props.className} style={props.style} />;
+  return <div ref={containerRef} id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }}  />;
 };
 
 // 使用 React.forwardRef 并明确类型

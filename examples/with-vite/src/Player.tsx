@@ -1,5 +1,5 @@
-import { useCallback, useRef } from 'react';
-import { EzopenPlayer, type EzopenPlayerRef } from '@ezuikit/player-react';
+import { useCallback, useRef, useEffect, useState } from 'react';
+import { EzopenPlayer, type EzopenPlayerRef, type EzopenPlayerProps } from '@ezuikit/player-react';
 import { isMobile } from './utils';
 import './index.css';
 
@@ -12,6 +12,12 @@ const Player = () => {
   const languageRef = useRef<HTMLSelectElement>(null);
   const templateRef = useRef<HTMLSelectElement>(null);
 
+  const [ezopenPlayer, setEzopenPlayer] = useState<EzopenPlayerProps>({
+    id: 'player-container-video',
+    url: 'ezopen://open.ys7.com/BA5551167/1.hd.live',
+    accessToken: '',
+  });
+
   const initPlayer = useCallback(() => {
     if (document.getElementById('player-container')) {
       let width = 600;
@@ -21,18 +27,24 @@ const Player = () => {
       const accessToken = accessTokenRef.current?.value.trim();
       const staticPath = staticPathRef.current?.value.trim() || undefined;
       const domain = domainRef.current?.value.trim() || 'https://open.ys7.com';
-      const language = languageRef.current?.value.trim();
+      const language = languageRef.current?.value.trim() as 'en' | 'zh';
       const template = templateRef.current?.value.trim();
 
       if (!url || !accessToken) {
         console.warn('url or accessToken is empty!');
         return;
       }
-
-      if (isMobile()) {
-        width = document.documentElement.clientWidth;
-        height = (width * 9) / 16;
-      }
+      setEzopenPlayer((p: EzopenPlayerProps) => {
+        return {
+          ...p,
+          url,
+          domain,
+          staticPath,
+          accessToken,
+          template,
+          language,
+        };
+      });
     }
   }, []);
 
@@ -121,23 +133,64 @@ const Player = () => {
       player.current = null;
     }
   };
+  const handlfullScreen = () => {
+    if (player.current) {
+      player.current.$emit('fullScreen', () => {});
+    }
+  };
+
+  const setWaterMarkFont = () => {
+    if (player.current) {
+      player.current.$emit('setWaterMarkFont', {
+        fontString: ["1111"],
+        startPos: { fX: "0.5", fY: "0.5" },
+        fontColor: { fR: parseFloat((11 / 255).toString()).toFixed(3), fG: parseFloat((11 / 255).toString()).toFixed(3), fB: parseFloat((11 / 255).toString()).toFixed(3), fA: 1 },
+        fontSize: { nFontWidth: "16", nFontHeight: "16" },
+        fontRotate: { fRotateAngle: "0", fFillFullScreen: true },
+        fontNumber: { nRowNumber: "4", nColNumber: "4" },
+        space: 1,
+      });
+     
+    }
+  };
+  const getPlayRate = () => {
+    if (player.current) {
+      let a = player.current.$emit('getPlayRate', (rate: number) => {
+        console.log('rate', rate);
+      });
+      console.log('🚀 ~ getPlayRate ~ a:', a);
+    }
+  };
+
+  const getVideoLevelList = () => {
+    if (player.current) {
+      let a = player.current.$emit('getVideoLevelList', (rate: number) => {
+        console.log('rate', rate);
+      });
+      console.log('🚀 ~ getVideoLevelList ~ a:', a);
+    }
+  };
+
+  const getOSDTime = () => {
+    if (player.current) {
+      let a = player.current.$emit('getOSDTime') as Promise<any>;
+      console.log('🚀 ~ getOSDTime ~ a:', a);
+      a.then((res) => {
+        console.log('🚀 ~ getOSDTime ~ res:', res);
+      });
+    }
+  };
+
+  const handleError = (en: any) => {
+    console.log('error', en);
+  };
 
   return (
     <div className="player-wrapper">
       <h2>ezopen使用示例 (Example of using ezopen)：</h2>
-      <div>
+      <div className="player" id="player-container">
         {/* https://stackoverflow.com/questions/71831601/ts2786-component-cannot-be-used-as-a-jsx-component */}
-        <EzopenPlayer
-          template="pcLive"
-          id="player-container"
-          url="ezopen://open.ys7.com/BC7799091/1.hd.live"
-          accessToken="at.bltajf842sg1a200226coblq4vft3bwq-4cl8isjzq6-0ncjeqd-9cbesk7br"
-          width={600}
-          height={400}
-          ref={player}
-        >
-          1
-        </EzopenPlayer>
+        <EzopenPlayer {...ezopenPlayer} handleError={handleError} ref={player} isAutoSize={true}></EzopenPlayer>
       </div>
       <div className="form">
         <div className="form-item">
@@ -148,12 +201,11 @@ const Player = () => {
         <div className="form-item">
           <label>accessToken</label>
           {/* prettier-ignore */}
-          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="at.d525oyj8d7bwohb40ssn3266cfq2mwi2-8hgpypehn9-1fafaty-ea2fxbc1" />
+          <input ref={accessTokenRef} placeholder="ezopen accessToken" defaultValue="" />
         </div>
         <div className="form-item">
           <label>staticPath</label>
           {/* prettier-ignore */}
-          {/* https://openstatic.ys7.com/ezuikit_js/v8.1.9/ezuikit_static */}
           <input ref={staticPathRef} placeholder="ezopen staticPath" defaultValue="" />
         </div>
         <div className="form-item">
@@ -176,24 +228,22 @@ const Player = () => {
             <option value="pcLive">pcLive</option>
             {/* To use the replay theme, please use the replay playback address */}
             <option value="pcRec">pcRec</option>
-            {/* <option value="mobileLive">mobileLive</option>
-            <option value="mobileRec">mobileRec</option> */}
+            <option value="mobileLive">mobileLive</option>
+            <option value="mobileRec">mobileRec</option>
           </select>
+        </div>
+        <div className="form-item">
+          <button onClick={handlfullScreen}>全屏</button>
+          <button onClick={setWaterMarkFont}>添加水印</button>
+          <button onClick={getPlayRate}>获取当前播放速率</button>
+          <button onClick={getVideoLevelList}>获取码率列表</button>
+          <button onClick={getOSDTime}>获取当前时间</button>
         </div>
       </div>
       <div>
         <button onClick={initPlayer}>初始化(init)</button>
         <button onClick={handleStop}>stop</button>
         <button onClick={handlePlay}>play</button>
-        {/* <button onClick={handleOpenSound}>openSound</button>
-        <button onClick={handleCloseSound}>closeSound</button>
-        <button onClick={handleStartSave}>startSave</button>
-        <button onClick={handleStopSave}>stopSave</button>
-        <button onClick={handleCapturePicture}>capturePicture</button>
-        <button onClick={handleFullscreen}>fullScreen</button>
-        <button onClick={handleGetOSDTime}>getOSDTime</button>
-        <button onClick={handleStartTalk}>开始对讲(startTalk)</button>
-        <button onClick={handleStopTalk}>结束对讲(stopTalk)</button> */}
         <button onClick={handleDestroy}>destroy</button>
       </div>
     </div>

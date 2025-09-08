@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/player-react",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "",
   "main": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
@@ -19,14 +19,15 @@
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "",
   "dependencies": {
-    "ezuikit-js": "8.1.14",
+    "@ezuikit/player-hls": "0.1.0",
     "ezuikit-flv": "1.0.3-beta.2",
-    "@ezuikit/player-hls": "0.1.0"
+    "ezuikit-js": "8.1.14",
+    "lodash": "4.17.21"
   },
   "devDependencies": {
+    "@config/rollup": "workspace:*",
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.14",
-    "@config/rollup": "workspace:*",
     "typescript": "5.3.3"
   },
   "engines": {

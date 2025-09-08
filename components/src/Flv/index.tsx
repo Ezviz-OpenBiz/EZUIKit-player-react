@@ -1,10 +1,12 @@
 import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
 import EzuikitFlv from 'ezuikit-flv';
+import useResizeObserver from '../hooks/useResizeObserver';
 
 /**
  * 播放器组件 Props
  */
-export interface FlvPlayerProps {
+// extends Record<string, any>  请保留 强化 ...props 能力
+export interface FlvPlayerProps extends Record<string, any> {
   /** 播放器 id, 必须的 */
   id: string;
   /** ezopen 播放地址 */
@@ -35,6 +37,10 @@ export interface FlvPlayerProps {
   };
   className?: string;
   style?: React.CSSProperties;
+  // 播放器是否自动适配容器宽高
+  isAutoSize?: boolean;
+  // 自动播放器父容器
+  playerParentContainerId?: string;
 }
 
 export interface FlvPlayerRef {
@@ -42,11 +48,13 @@ export interface FlvPlayerRef {
   play: () => void;
   pause: () => void;
   destroy: () => void;
+  on: (event: string, callback: (...args: any[]) => void) => void;
+  // $emit 支持泛行 保留ts能力
+  $emit: <T = any>(event: string, ...args: any) => Promise<T> | void | string | T;
 }
 
 const DEFAULT_PROPS = {
   staticPath: './flv_decoder/',
-  autoPlay: false,
 };
 
 // 使用 ForwardRefRenderFunction 明确类型
@@ -74,6 +82,8 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
     };
   }, [props.id, props.url]); // 添加依赖项
 
+  props.isAutoSize && useResizeObserver(player, props.playerParentContainerId as string);
+
   useImperativeHandle(ref, () => ({
     player: () => {
       return player.current;
@@ -92,6 +102,16 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
       if (player.current) {
         player.current.destroy?.();
         player.current = null;
+      }
+    },
+    on: (event, callback) => {
+      if (player.current) {
+        player.current?.eventEmitter.on(event, callback);
+      }
+    },
+    $emit: (event, ...args) => {
+      if (player.current) {
+        return player.current?.[event]?.(...args);
       }
     },
   }));
