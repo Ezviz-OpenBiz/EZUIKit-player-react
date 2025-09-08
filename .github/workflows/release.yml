@@ -27,8 +27,9 @@ jobs:
           pnpm run build
 
       - name: Check file versions
+        working-directory: ./components
         run: |
-          files="components/index.js components/index.mjs components/package.json"
+          files="dist/index.js dist/index.mjs components/package.json"
 
           version=""
           inconsistent=false
@@ -70,12 +71,14 @@ jobs:
       # 设置 Node
       - name: Setup Node
         uses: actions/setup-node@v3
+        working-directory: ./components
         with:
           node-version: 18
           cache: npm
           registry-url: https://registry.npmjs.org
       # 安装依赖
       - name: Install dependencies
+        working-directory: ./components
         run: npm install
 
       # 获取 tag 的版本类型（仅支持 正式版、beta版和alpha 版）
@@ -98,6 +101,7 @@ jobs:
       #   run: pnpm run build
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
+        working-directory: ./components
         run: npm publish --tag ${{ steps.determine_tag.outputs.tag }}
         env:
           # 这里需要几个 Token 变量
