@@ -71,7 +71,6 @@ jobs:
       # 设置 Node
       - name: Setup Node
         uses: actions/setup-node@v3
-        working-directory: ./components
         with:
           node-version: 18
           cache: npm
