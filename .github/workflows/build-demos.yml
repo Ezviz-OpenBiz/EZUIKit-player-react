@@ -35,8 +35,9 @@ jobs:
       #   run: |
       #     pnpm install --no-frozen-lockfile
       #     pnpm run build
-
+      # with-vite 项目中使用vite 5 版本，和 node 16.X 不兼容，可以额外提供一个vite 4 版本支持
       - name: Build with-vite
+        if: matrix.node-version != '16.x'
         working-directory: ./examples/with-vite
         run: |
           pnpm install --no-frozen-lockfile
