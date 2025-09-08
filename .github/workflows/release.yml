@@ -83,9 +83,12 @@ jobs:
             echo "Unsupported version detected. Terminating."
             exit 1
           fi
-      # # 打包
-      # - name: Build Packages
-      #   run: pnpm run build
+
+      # 必须设置 .npmrc
+      - name: Set up .npmrc for npm publish
+        working-directory: ./components
+        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
         working-directory: ./components
