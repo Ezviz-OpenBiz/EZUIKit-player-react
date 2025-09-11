@@ -12,16 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: npm
+          registry-url: https://registry.npmjs.org
       - uses: pnpm/action-setup@v3
         with:
           version: 8
 
-      - name: Build Components
-        working-directory: ./components
+      # 安装依赖
+      - name: Install dependencies
         run: |
           pnpm install --no-frozen-lockfile
           pnpm run build
@@ -63,13 +65,9 @@ jobs:
 
           echo "所有文件版本号一致: $version"
 
-      # 安装依赖
-      - name: Install dependencies
-        working-directory: ./components
-        run: pnpm install --no-frozen-lockfile
-
-      # 获取 tag 的版本类型（仅支持 正式版、beta版和alpha 版）
+      # 获取 tag 的版本类型（仅支持 正式版和beta版）
       - name: Determine release tag
+        working-directory: ./components
         id: determine_tag
         run: |
           TAG=$(echo "${GITHUB_REF}" | sed 's/refs\/tags\/\(.*\)/\1/')
@@ -83,12 +81,9 @@ jobs:
             echo "Unsupported version detected. Terminating."
             exit 1
           fi
-
-      # 必须设置 .npmrc
-      - name: Set up .npmrc for npm publish
-        working-directory: ./components
-        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-
+      # # 打包
+      # - name: Build Packages
+      #   run: pnpm run build
       # 发布npm 发布前执行了prepublishOnly
       - name: Publish npm
         working-directory: ./components
