@@ -11,19 +11,16 @@ export interface HlsPlayerProps extends Record<string, any> {
   id: string;
   /** ezopen 播放地址 */
   url: string;
-  /** 取流等操作需要的 token */
-  accessToken?: string;
   autoPlay?: boolean;
   /** 播放器容器宽度，单位px */
   width?: number;
   /** 播放器容器高度，单位px */
   height?: number;
-  /** 解码静态资源路径， 默认是 ./flv_decoder/, */
   staticPath?: string;
   className?: string;
   style?: React.CSSProperties;
   // 播放器是否自动适配容器宽高
-  isAutoSize?: boolean;
+  isAutoSize: boolean;
   // 自动播放器父容器
   playerParentContainerId?: string;
 }
@@ -33,7 +30,6 @@ export interface HlsPlayerRef {
   play: () => void;
   pause: () => void;
   destroy: () => void;
-  on: (event: string, callback: (...args: any[]) => void) => void;
   // $emit 支持泛行 保留ts能力
   $emit: <T = any>(event: string, ...args: any) => Promise<T> | void | string | T;
 }
@@ -45,6 +41,7 @@ const DEFAULT_PROPS = {
 // 使用 ForwardRefRenderFunction 明确类型
 const HlsPlayerFunc: ForwardRefRenderFunction<HlsPlayerRef, React.PropsWithChildren<HlsPlayerProps>> = (props, ref) => {
   const player = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!props.id) {
@@ -52,10 +49,15 @@ const HlsPlayerFunc: ForwardRefRenderFunction<HlsPlayerRef, React.PropsWithChild
     }
 
     if (!player.current && props.url) {
-      const opt = {
+      let opt = {
         ...DEFAULT_PROPS,
         ...props,
       };
+      if (props.isAutoSize) {
+        const width = containerRef.current?.offsetWidth;
+        const height = width as number * (9 / 16);
+        opt = { ...opt, width, height };
+      }
       player.current = new EzuikitHls(opt as unknown as HlsOptions);
     }
 
@@ -67,7 +69,7 @@ const HlsPlayerFunc: ForwardRefRenderFunction<HlsPlayerRef, React.PropsWithChild
     };
   }, [props.id, props.url]); // 添加依赖项
 
-  props.isAutoSize && useResizeObserver(player, props.playerParentContainerId as string);
+  useResizeObserver(props.isAutoSize, player, props.playerParentContainerId as string);
 
   useImperativeHandle(ref, () => ({
     player: () => {
@@ -89,11 +91,6 @@ const HlsPlayerFunc: ForwardRefRenderFunction<HlsPlayerRef, React.PropsWithChild
         player.current = null;
       }
     },
-    on: (event, callback) => {
-      if (player.current) {
-        player.current?.eventEmitter.on(event, callback);
-      }
-    },
     $emit: (event, ...args) => {
       if (player.current) {
         return player.current?.[event]?.(...args);
@@ -101,12 +98,16 @@ const HlsPlayerFunc: ForwardRefRenderFunction<HlsPlayerRef, React.PropsWithChild
     },
   }));
 
-  return <div id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }} />;
+  return <div ref={containerRef} id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }} />;
 };
 
 // 使用 React.forwardRef 并明确类型
 const HlsPlayer = React.forwardRef(HlsPlayerFunc);
 
 HlsPlayer.displayName = 'HlsPlayer';
+
+HlsPlayer.defaultProps = {
+  isAutoSize: false,
+};
 
 export default HlsPlayer;

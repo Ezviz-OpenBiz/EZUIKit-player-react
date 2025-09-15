@@ -41,7 +41,7 @@ export interface EzopenPlayerProps extends Record<string, any> {
   className?: string;
   style?: React.CSSProperties;
   // 播放器是否自动适配容器宽高
-  isAutoSize?: boolean;
+  isAutoSize: boolean;
   // 自动播放器父容器
   playerParentContainerId?: string;
 }
@@ -78,16 +78,20 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     if (!(props.accessToken || props.token)) {
       throw new Error('accessToken or token is required!');
     }
-
     if (containerRef.current && !player.current) {
       let opt = { ...DEFAULT_PROPS, ...props };
-      if (props.isAutoSize) {
-        const width = containerRef.current?.offsetWidth;
-        const height = width * (9 / 16);
-        opt = { ...opt, width, height };
+      try {
+        if (props.isAutoSize) {
+          const width = containerRef.current?.offsetWidth;
+          const height = width * (9 / 16);
+          opt = { ...opt, width, height };
+        }
+        player.current = new EZUIKitPlayer(opt);
+      } catch (error) {
+        if (error instanceof Error && props.onError) {
+          props.onError(error);
+        }
       }
-
-      player.current = new EZUIKitPlayer(opt);
     }
 
     return () => {
@@ -98,7 +102,7 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
     };
   }, [props.id, props.url, props.accessToken, props.token]); // 添加依赖项
 
-  useResizeObserver(player, props.playerParentContainerId as string);
+  useResizeObserver(props.isAutoSize, player, props.playerParentContainerId as string);
 
   useImperativeHandle(ref, () => ({
     player: () => {
@@ -139,5 +143,9 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
 const EzopenPlayer = React.forwardRef(EzopenPlayerFunc);
 
 EzopenPlayer.displayName = 'EzopenPlayer';
+
+EzopenPlayer.defaultProps = {
+  isAutoSize: false,
+};
 
 export default EzopenPlayer;

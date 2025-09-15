@@ -38,7 +38,7 @@ export interface FlvPlayerProps extends Record<string, any> {
   className?: string;
   style?: React.CSSProperties;
   // 播放器是否自动适配容器宽高
-  isAutoSize?: boolean;
+  isAutoSize: boolean;
   // 自动播放器父容器
   playerParentContainerId?: string;
 }
@@ -48,7 +48,6 @@ export interface FlvPlayerRef {
   play: () => void;
   pause: () => void;
   destroy: () => void;
-  on: (event: string, callback: (...args: any[]) => void) => void;
   // $emit 支持泛行 保留ts能力
   $emit: <T = any>(event: string, ...args: any) => Promise<T> | void | string | T;
 }
@@ -60,6 +59,7 @@ const DEFAULT_PROPS = {
 // 使用 ForwardRefRenderFunction 明确类型
 const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChildren<FlvPlayerProps>> = (props, ref) => {
   const player = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!props.id) {
@@ -67,10 +67,15 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
     }
 
     if (!player.current && props.url) {
-      const opt = {
+      let opt = {
         ...DEFAULT_PROPS,
         ...props,
       };
+      if (props.isAutoSize) {
+        const width = containerRef.current?.offsetWidth;
+        const height = width as number * (9 / 16);
+        opt = { ...opt, width, height };
+      }
       player.current = new EzuikitFlv(opt);
     }
 
@@ -82,7 +87,7 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
     };
   }, [props.id, props.url]); // 添加依赖项
 
-  props.isAutoSize && useResizeObserver(player, props.playerParentContainerId as string);
+  useResizeObserver(props.isAutoSize, player, props.playerParentContainerId as string);
 
   useImperativeHandle(ref, () => ({
     player: () => {
@@ -104,11 +109,6 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
         player.current = null;
       }
     },
-    on: (event, callback) => {
-      if (player.current) {
-        player.current?.eventEmitter.on(event, callback);
-      }
-    },
     $emit: (event, ...args) => {
       if (player.current) {
         return player.current?.[event]?.(...args);
@@ -116,12 +116,16 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
     },
   }));
 
-  return <div id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }} />;
+  return <div ref={containerRef} id={props.id} className={props.className} style={{ width: props.width, height: props.height, ...(props.style || {}) }} />;
 };
 
 // 使用 React.forwardRef 并明确类型
 const FlvPlayer = React.forwardRef(FlvPlayerFunc);
 
 FlvPlayer.displayName = 'FlvPlayer';
+
+FlvPlayer.defaultProps = {
+  isAutoSize: false,
+};
 
 export default FlvPlayer;
