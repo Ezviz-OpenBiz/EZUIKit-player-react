@@ -2,6 +2,7 @@ packages:
   - 'components'
   - 'config/*'
   - 'examples/*'
+  - 'examples/with-qiankun/*'
   - '!**/test/**'
   - '!**/dist/**'
   - '!**/build/**'
