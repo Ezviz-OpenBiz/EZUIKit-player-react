@@ -19,8 +19,8 @@
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "",
   "dependencies": {
-    "ezuikit-js": "8.1.14",
-    "ezuikit-flv": "1.0.3-beta.2",
+    "ezuikit-js": "8.1.15",
+    "ezuikit-flv": "2.0.1",
     "@ezuikit/player-hls": "0.1.0"
   },
   "devDependencies": {

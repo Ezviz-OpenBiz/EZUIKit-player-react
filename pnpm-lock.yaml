@@ -66,11 +66,11 @@ importers:
         specifier: 0.1.0
         version: 0.1.0
       ezuikit-flv:
-        specifier: 1.0.3-beta.2
-        version: 1.0.3-beta.2
+        specifier: 2.0.1
+        version: 2.0.1
       ezuikit-js:
-        specifier: 8.1.14
-        version: 8.1.14
+        specifier: 8.1.15
+        version: 8.1.15
     devDependencies:
       '@config/rollup':
         specifier: workspace:*
@@ -2548,19 +2548,8 @@ packages:
       ua-parser-js: 1.0.37
     dev: false
 
-  /@ezuikit/player-base@0.1.0-alpha.1:
-    resolution: { integrity: sha512-68O3PtB5g7hm+HSpCqE/ef/Ud0xUPsFv3ckrj6VKm7wyed+9aqTazxv8mDPOXuNStZZULpfn+7Uf0KW7cHAyxg== }
-    dependencies:
-      '@ezuikit/utils-logger': 1.0.1
-      '@ezuikit/utils-tools': 1.1.0
-      eventemitter3: 5.0.1
-      lodash-es: 4.17.21
-      screenfull: 6.0.2
-      ua-parser-js: 1.0.37
-    dev: false
-
-  /@ezuikit/player-ezopen@8.1.12-beta.4:
-    resolution: { integrity: sha512-qp3d7s8t2OlHwt/+qofxsk68bWbLOj1qbK3VdxUJQ8D37KGn7aKRc6EtdyP2yDMe8LCSyytJzbyORDCkaKu9VA== }
+  /@ezuikit/player-ezopen@8.1.15-beta.4:
+    resolution: { integrity: sha512-ry7kqBkFppxdXAiTHEIZZIigYGjv208NRX2t0XxvVRb9DPchKfwYN0bwjljXqD1Z3LHmhISlix+U0Q12ofLiRQ== }
     dependencies:
       '@ezuikit/player-plugin-record': 8.1.8-beta.3
       '@ezuikit/utils-i18n': 1.1.1
@@ -8634,23 +8623,23 @@ packages:
       - supports-color
     dev: false
 
-  /ezuikit-flv@1.0.3-beta.2:
-    resolution: { integrity: sha512-n5tS8LEXyC22jlg8V0xTBmFcEUIBCyK/5UK41VXMg00/ChVZWHSswL+6Dnq+lIarpSXc7BCC1XGe28l0e8ZJYQ== }
+  /ezuikit-flv@2.0.1:
+    resolution: { integrity: sha512-6HvNRcWmh4qyTRUsJ9OypHevrkDwmancsk7U1McUKoTGdzhpOlLiXxNbFWmYWBkK+XK5y+Egzq1/XznLSznQ6w== }
     dependencies:
-      '@ezuikit/player-base': 0.1.0-alpha.1
       '@ezuikit/utils-collect': 0.1.0-beta.1
       '@ezuikit/utils-logger': 1.0.1
       browser-tool: 1.0.5
+      deepmerge: 4.3.1
       eventemitter3: 5.0.1
       js-md5: 0.8.3
       recordrtc: 5.6.2
       screenfull: 5.1.0
     dev: false
 
-  /ezuikit-js@8.1.14:
-    resolution: { integrity: sha512-200lgVtAxxqtmrwX/z17TnQsD7i+3HgPzh3TBhZTsuE3NFt0NHi2wAMvJidhm8TX731HGn9jSrfKQpOvaruK+g== }
+  /ezuikit-js@8.1.15:
+    resolution: { integrity: sha512-1rYAvL7dJWoRNGGoPwqCfGX3LDiDoMQFk2LxdqT7Sk9ITt0TaOwnprka4cF372g/qYuwG17xUbQ0+wUgnMV7KA== }
     dependencies:
-      '@ezuikit/player-ezopen': 8.1.12-beta.4
+      '@ezuikit/player-ezopen': 8.1.15-beta.4
       '@ezuikit/utils-collect': 0.1.1
       '@ezuikit/utils-i18n': 1.1.1
       '@ezuikit/utils-logger': 1.1.0
