@@ -52,7 +52,7 @@ const DEFAULT_PROPS = {
 };
 
 // 使用 ForwardRefRenderFunction 明确类型
-const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWithChildren<EzopenPlayerProps>> = (props, ref) => {
+const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlayerProps> = (props, ref) => {
   const player = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -78,9 +78,11 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, React.PropsWit
       if (player.current) {
         player.current.destroy?.();
         player.current = null;
+        console.warn('player destroy');
       }
     };
-  }, [props.id, props.url, props.accessToken, props.token]); // 添加依赖项
+  }, [props.id, props.url, props.accessToken, props.token]);
+  // 添加依赖项
 
   useImperativeHandle(ref, () => ({
     player: () => player.current,

@@ -35,3 +35,7 @@ stats.html
 ezuikit_static/
 flv_decoder/
 hls_decoder/
+
+with-qiankun/docker/main
+with-qiankun/docker/with-vite-react-app
+with-qiankun/docker/with-vite-vue-app
