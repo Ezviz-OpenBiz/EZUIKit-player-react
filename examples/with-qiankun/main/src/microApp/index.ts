@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-console */
-import { registerMicroApps, start, addGlobalUncaughtErrorHandler, setDefaultMountApp, runAfterFirstMounted } from 'qiankun';
+import {
+  registerMicroApps,
+  start,
+  addGlobalUncaughtErrorHandler,
+  setDefaultMountApp,
+  runAfterFirstMounted,
+} from 'qiankun';
 import { microApps } from '@/microApp/config';
 import { type TInitQiankun } from '@/microApp/types';
 import { store } from '@/store';
@@ -73,9 +79,10 @@ export const initQiankun = (props?: TInitQiankun) => {
   // 启动 qiankun
   start({
     sandbox: {
-      // strictStyleIsolation: true,
+      // strictStyleIsolation: true, // 样式隔离
       // experimentalStyleIsolation: true,
     },
+    prefetch: true, // 预加载
   });
   // 第一个子应用加载完毕回调
   runAfterFirstMounted(() => {

@@ -20,7 +20,9 @@ export default defineConfig(({ mode }) => {
       cors: true,
     },
     // 生产模式下依旧不支持 publicPath, 需要将 vite.config.js 中 base 配置写死【致使多环境部署不便捷】
-    base: isDev ? '/' : `${process.env.VITE_VUE_HOST || 'http://127.0.0.1'}:${process.env.VITE_VUE_PORT || port}/`,
+    base: isDev
+      ? '/'
+      : `${process.env.VITE_VUE_HOST || 'http://127.0.0.1'}:${process.env.VITE_VUE_PORT || port}/`,
     resolve: {
       // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],

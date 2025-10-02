@@ -2,20 +2,20 @@ const menusList = [
   {
     id: 1001,
     name: 'React 应用',
-    path: '/reactApp',
+    path: '/withViteReactApp',
     icon: 'icon-react',
     children: [
       {
         id: 100101,
         name: '首页',
-        path: '/reactApp/home',
+        path: '/withViteReactApp/home',
         icon: 'icon-shouye',
         children: [],
       },
       {
         id: 100102,
         name: '关于',
-        path: '/reactApp/about',
+        path: '/withViteReactApp/about',
         icon: 'icon-guanyu',
         children: [],
       },
@@ -24,20 +24,20 @@ const menusList = [
   {
     id: 1002,
     name: 'Vue 应用',
-    path: '/vueApp',
+    path: '/withViteVueApp',
     icon: 'icon-vue',
     children: [
       {
         id: 100201,
         name: '首页',
-        path: '/vueApp/home',
+        path: '/withViteVueApp/home',
         icon: 'icon-shouye',
         children: [],
       },
       {
         id: 100202,
         name: '关于',
-        path: '/vueApp/about',
+        path: '/withViteVueApp/about',
         icon: 'icon-guanyu',
         children: [],
       },

@@ -1,5 +1,5 @@
 {
-  "name": "vue-app",
+  "name": "@qiankun/with-vite-vue-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "vue-tsc": "^1.8.5"
+    "vue-tsc": "^1.8.5",
+    "@ezuikit/player-react": "^1.0.0-alpha.1"
   }
 }

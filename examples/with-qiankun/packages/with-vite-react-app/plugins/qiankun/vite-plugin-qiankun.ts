@@ -1,9 +1,11 @@
 import cheerio, { type CheerioAPI, type Element } from 'cheerio';
 import { type PluginOption } from 'vite';
 
-const appendBase = "(window.proxy ? (window.proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + '..') : '') + ";
+const appendBase =
+  "(window.proxy ? (window.proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + '..') : '') + ";
 
-const createImport = (src: string, callback?: string) => `import(${appendBase}'${src}').then(${callback})`;
+const createImport = (src: string, callback?: string) =>
+  `import(${appendBase}'${src}').then(${callback})`;
 
 const createEntry = (entryScript: string | null) => `
 let RefreshRuntime;
@@ -77,7 +79,8 @@ const htmlPlugin: PluginFn = (qiankunName, microOption = {}) => {
     const moduleSrc = script$.attr('src') || '/@react-refresh';
     let appendBase = '';
     if (microOption.useDevMode && !isProduction) {
-      appendBase = "(window.proxy ? (window.proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + '..') : '') + ";
+      appendBase =
+        "(window.proxy ? (window.proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + '..') : '') + ";
     }
     script$.removeAttr('src');
     script$.removeAttr('type');

@@ -3,25 +3,27 @@ import { type TMicroApps } from './types';
 
 // const isDev = process.env.NODE_DEV === 'development'
 
+const subAppContainer = '#subapp-viewport';
+
 export const microApps: TMicroApps = [
   {
     label: 'React 应用',
-    name: 'reactApp',
+    name: 'withViteReactApp',
     entry: __REACT_HOST__ + ':' + __REACT_PORT__,
-    activeRule: 'reactApp',
-    container: '#subapp-viewport',
+    activeRule: 'withViteReactApp',
+    container: subAppContainer,
     props: {
-      basename: '/reactApp',
+      basename: '/withViteReactApp',
     },
   },
   {
     label: 'Vue 应用',
-    name: 'vueApp',
+    name: 'withViteVueApp',
     entry: __VUE_HOST__ + ':' + __VUE_PORT__,
-    container: '#subapp-viewport',
-    activeRule: 'vueApp',
+    container: subAppContainer,
+    activeRule: 'withViteVueApp',
     props: {
-      basename: '/vueApp',
+      basename: '/withViteVueApp',
     },
   },
 ];

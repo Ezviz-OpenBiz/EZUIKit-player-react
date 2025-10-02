@@ -4,26 +4,26 @@ import { useAppSelector } from '@/store';
 import { type TMenuList } from '@/types';
 import menusList from '@/mock/menusList';
 import styles from './layout.module.scss';
-
-const reactSubApps = ['reactApp'];
-const vueSubApps = ['vueApp'];
+import { useEffect, useState } from 'react';
 
 const Layout = () => {
   const { currentApp, microAppIsLoading } = useAppSelector((state) => state.common);
 
-  let currentMenus: TMenuList = [];
+  const [currentMenus, setCurrentMenus] = useState<TMenuList>([]);
 
-  if (currentApp?.name && reactSubApps?.includes(currentApp?.name)) {
-    currentMenus = menusList.find((item) => item.path === '/reactApp')?.children || [];
-  }
-
-  if (currentApp?.name && vueSubApps?.includes(currentApp?.name)) {
-    currentMenus = menusList.find((item) => item.path === '/vueApp')?.children || [];
-  }
+  useEffect(() => {
+    // 根据当前激活的子应用，匹配左侧菜单
+    setCurrentMenus(
+      menusList.find((item) => item.path === '/' + currentApp?.activeRule?.replace(/^\//, ''))
+        ?.children || [],
+    );
+    console.log('currentMenus ===', currentMenus);
+  }, [currentApp?.name]);
 
   return (
     <div className={styles.layout}>
       <div className={styles['layout-header']}>
+        {/* 头部菜单 */}
         {menusList.map((item, index) => (
           <Link key={item?.id || index} to={item.path} style={{ marginRight: '15px' }}>
             {item.name}
@@ -32,6 +32,7 @@ const Layout = () => {
       </div>
       <div className={styles['layout-container']}>
         <div className={styles['layout-left']}>
+          {/* 侧边栏 */}
           {currentMenus?.map((item) => (
             <Link to={item.path} key={item.path}>
               {item.name}

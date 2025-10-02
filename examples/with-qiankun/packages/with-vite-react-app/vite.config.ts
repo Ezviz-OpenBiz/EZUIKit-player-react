@@ -32,6 +32,8 @@ export default defineConfig(({ mode }) => {
       cors: true,
     },
     // 生产模式下依旧不支持 publicPath, 需要将 vite.config.js 中 base 配置写死【致使多环境部署不便捷】
-    base: isDev ? '/' : `${process.env.VITE_REACT_HOST || 'http://127.0.0.1'}:${process.env.VITE_REACT_PORT || 9998}/`,
+    base: isDev
+      ? '/'
+      : `${process.env.VITE_REACT_HOST || 'http://127.0.0.1'}:${process.env.VITE_REACT_PORT || 9998}/`,
   };
 });

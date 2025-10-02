@@ -1,5 +1,5 @@
 {
-  "name": "react-app",
+  "name": "@qiankun/with-vite-react-app",
   "private": true,
   "version": "0.0.0",
   "description": "app1(react) application",
@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "antd": "^5.8.6",
-    "cheerio": "1.0.0-rc.12",
+    "cheerio": "1.1.2",
     "qiankun": "^2.10.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "@ezuikit/player-react": "^1.0.0-alpha.1"
   },
   "devDependencies": {}
 }

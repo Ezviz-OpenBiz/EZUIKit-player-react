@@ -9,7 +9,12 @@ const Home = () => {
       <Button type="primary" onClick={() => setIsOpen(true)}>
         Open Modal
       </Button>
-      <Modal title="Basic Modal" open={isOpen} onOk={() => setIsOpen(false)} onCancel={() => setIsOpen(false)}>
+      <Modal
+        title="Basic Modal"
+        open={isOpen}
+        onOk={() => setIsOpen(false)}
+        onCancel={() => setIsOpen(false)}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>

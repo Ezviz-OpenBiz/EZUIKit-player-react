@@ -24,7 +24,11 @@ const useInitConfig = () => {
         }
       }
     } catch (error) {
-      console.log('%c👉  error: ', 'background:#41b883;padding:1px; border-radius: 0 3px 3px 0;color: #fff', error); // 👈
+      console.log(
+        '%c👉  error: ',
+        'background:#41b883;padding:1px; border-radius: 0 3px 3px 0;color: #fff',
+        error,
+      ); // 👈
     }
   }, [currentApp, dispatch, location.pathname]);
 
