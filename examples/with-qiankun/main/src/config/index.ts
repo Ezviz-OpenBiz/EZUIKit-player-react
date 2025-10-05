@@ -8,8 +8,8 @@ import {
   setDefaultMountApp,
   runAfterFirstMounted,
 } from 'qiankun';
-import { microApps } from '@/microApp/config';
-import { type TInitQiankun } from '@/microApp/types';
+import { microApps } from '@/config/config';
+import { type TInitQiankun } from '@/config/types';
 import { store } from '@/store';
 import { commonActions } from '@/store/common';
 
@@ -74,7 +74,7 @@ export const initQiankun = (props?: TInitQiankun) => {
   registerApp(props);
 
   // 设置默认进入的子应用
-  setDefaultMountApp('/reactApp');
+  setDefaultMountApp('/withReactScriptsApp');
 
   // 启动 qiankun
   start({

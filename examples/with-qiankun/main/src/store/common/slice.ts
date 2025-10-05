@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { type TMicroApp } from '@/microApp/types';
+import { type TMicroApp } from '@/config/types';
 import { type TCommonState } from './types';
 
 const initialState: TCommonState = {

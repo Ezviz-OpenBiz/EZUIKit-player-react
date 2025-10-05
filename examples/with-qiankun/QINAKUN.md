@@ -84,23 +84,23 @@ registerMicroApps(
   [
     {
       label: 'React 应用', // 子应用名称
-      name: 'reactApp', // 子应用名称
+      name: 'withViteReactApp', // 子应用名称
       entry: '//localhost:8888', // 子应用入口
       container: '#subapp-viewport', // 子应用挂载的容器
-      activeRule: '/micro/reactApp', // 子应用的激活规则【匹配路由】
+      activeRule: '/withViteReactApp', // 子应用的激活规则【匹配路由】
       props: {
         // 传递给子应用的数据
-        basename: '/micro/reactApp',
+        basename: '/withViteReactApp',
       },
     },
     {
       label: 'Vue 应用',
-      name: 'vueApp',
+      name: 'withViteVueApp',
       entry: '//localhost:9999',
       container: '#subapp-viewport',
-      activeRule: '/micro/vueApp',
+      activeRule: '/withViteVueApp',
       props: {
-        basename: '/micro/vueApp',
+        basename: '/withViteVueApp',
       },
     },
   ],
@@ -121,7 +121,7 @@ registerMicroApps(
 );
 
 // 设置默认进入的子应用
-setDefaultMountApp('/micro/reactApp');
+setDefaultMountApp('/withViteReactApp');
 
 // 启动 qiankun
 start();

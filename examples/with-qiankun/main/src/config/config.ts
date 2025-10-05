@@ -7,7 +7,7 @@ const subAppContainer = '#subapp-viewport';
 
 export const microApps: TMicroApps = [
   {
-    label: 'React 应用',
+    label: 'React + vite 应用',
     name: 'withViteReactApp',
     entry: __REACT_HOST__ + ':' + __REACT_PORT__,
     activeRule: 'withViteReactApp',

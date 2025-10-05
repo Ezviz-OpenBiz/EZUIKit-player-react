@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => {
     define: {
       __REACT_PORT__: JSON.stringify(process.env.VITE_REACT_PORT),
       __REACT_HOST__: JSON.stringify(process.env.VITE_REACT_HOST.replace(/^http[s]?:/, '')),
+      __REACT_SCRIPTS_PORT__: JSON.stringify(process.env.VITE_REACT_SCRIPTS_PORT),
+      __REACT_SCRIPTS_HOST__: JSON.stringify(
+        process.env.VITE_REACT_SCRIPTS_HOST.replace(/^http[s]?:/, ''),
+      ),
       __VUE_PORT__: JSON.stringify(process.env.VITE_VUE_PORT),
       __VUE_HOST__: JSON.stringify(process.env.VITE_VUE_HOST.replace(/^http[s]?:/, '')),
     },

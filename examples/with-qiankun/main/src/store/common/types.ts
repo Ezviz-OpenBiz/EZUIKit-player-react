@@ -1,4 +1,4 @@
-import { type TMicroApp } from '@/microApp/types';
+import { type TMicroApp } from '@/config/types';
 
 export interface TCommonState {
   currentApp: TMicroApp | undefined;

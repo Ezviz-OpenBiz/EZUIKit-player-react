@@ -1,4 +1,5 @@
-import cheerio, { type CheerioAPI, type Element } from 'cheerio';
+import * as cheerio from 'cheerio';
+import { type CheerioAPI } from 'cheerio';
 import { type PluginOption } from 'vite';
 
 const appendBase =
@@ -75,7 +76,7 @@ const htmlPlugin: PluginFn = (qiankunName, microOption = {}) => {
     if (!scriptTag) {
       return;
     }
-    const script$ = $(scriptTag);
+    const script$ = $(scriptTag as any);
     const moduleSrc = script$.attr('src') || '/@react-refresh';
     let appendBase = '';
     if (microOption.useDevMode && !isProduction) {
@@ -133,7 +134,7 @@ const htmlPlugin: PluginFn = (qiankunName, microOption = {}) => {
       }
       const len = moduleTags.length;
       moduleTags.each((i, moduleTag) => {
-        const script$ = module2DynamicImport($, moduleTag);
+        const script$ = module2DynamicImport($, moduleTag as any);
         if (len - 1 === i) {
           // 入口文件中导入生命周期勾子
           script$?.attr('id', 'entry').html(`${script$.html()}.finally(() => {

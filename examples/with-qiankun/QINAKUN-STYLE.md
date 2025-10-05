@@ -41,8 +41,8 @@ start({
   },
 });
 
-// 方式2: 手动加载子应用 reactApp
-loadMicroApp('reactApp', {
+// 方式2: 手动加载子应用 withViteReactApp
+loadMicroApp('withViteReactApp', {
   sandbox: {
     strictStyleIsolation: true,
   },
@@ -84,8 +84,8 @@ start({
   },
 });
 
-// 方式2: 手动加载子应用 reactApp
-loadMicroApp('reactApp', {
+// 方式2: 手动加载子应用 withViteReactApp
+loadMicroApp('withViteReactApp', {
   sandbox: {
     experimentalStyleIsolation: true,
   },
@@ -95,12 +95,12 @@ loadMicroApp('reactApp', {
 当开启 `experimentalStyleIsolation` 后，其实我们可以看到 `qiankun` 会在外层容器上添加 `data-qiankun="子应用名称"` 属性，与此同时也会子应用的样式上添加 `div[data-qiankun="子应用名称"]` 选择器来实现了样式隔离。如下面结构所示：
 
 ```scss
-// 子应用名称 = reactApp
-div[data-qiankun='reactApp'] .layout {
+// 子应用名称 = withViteReactApp
+div[data-qiankun='withViteReactApp'] .layout {
   // 子应用样式
 }
 
-div[data-qiankun='reactApp'] .layout-container {
+div[data-qiankun='withViteReactApp'] .layout-container {
   // 子应用样式
 }
 ```

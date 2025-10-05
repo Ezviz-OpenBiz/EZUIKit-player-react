@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { initQiankun } from '@/microApp';
-import { microApps } from '@/microApp/config';
+import { initQiankun } from '@/config';
+import { microApps } from '@/config/config';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { commonActions } from '@/store/common';
 
@@ -35,7 +35,7 @@ const useInitConfig = () => {
   useEffect(() => {
     // 可以在此处通过判断权限【是否登录可获取的用户信息、菜单、按钮等权限】来决定是否初始化微应用
     initQiankun();
-  }, []);
+  }, [currentApp]);
 };
 
 export default useInitConfig;
