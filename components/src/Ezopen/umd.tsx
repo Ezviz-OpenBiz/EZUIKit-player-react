@@ -1,71 +1,73 @@
-import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
-import { EzopenPlayerProps } from '@/interface';
-import { type EZUIKitPlayer } from 'ezuikit-js';
+import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction, useCallback } from 'react';
+import { type EzopenPlayerProps, type EzopenPlayerRef } from '@/interface';
 import AppendJS from '../AppendJS';
 
-export interface EzopenPlayerUmdRef {
-  player: () => EZUIKitPlayer | null;
-  play: () => void;
-  stop: () => void;
-  destroy: () => void;
-}
-
 const DEFAULT_PROPS = {
+  language: 'zh' as EzopenPlayerProps['language'],
+  entryPath: './',
   staticPath: './ezuikit_static',
 };
 
 // 使用 ForwardRefRenderFunction 明确类型
-const EzopenPlayerUmdFunc: ForwardRefRenderFunction<EzopenPlayerUmdRef, EzopenPlayerProps> = (props, ref) => {
+/**
+ * 使用 UMD 方式加载播放器, 适用于没有使用 npm 安装的场景, 如 CDN 引入或解决微应用子应用隔离的场景
+ * 1. 通过 entryPath 配置 ezuikit.js 和 ezuikit_static 的路径， 需要确保全局唯一加载 ezuikit.js
+ * 2. 本地配置解码资源路径时，需确保 ezuikit_static 目录下的文件可访问（复制 ezuikit_static 文件夹到静态资源目录下）
+ *
+ * @param {EzopenPlayerProps} props - 播放器配置项
+ * @param { EzopenPlayerUmdRef } ref - 通过 ref 可以获取播放器实例和控制方法
+ * @returns React 组件
+ */
+const EzopenPlayerUmdFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlayerProps> = (props, ref) => {
   const player = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [ezopenOptions, setEzopenOptions] = React.useState<Partial<EzopenPlayerProps>>({ ...DEFAULT_PROPS, ...props });
+
+  const onDestroy = useCallback(() => {
+    if (player.current) {
+      player.current.destroy?.();
+      player.current = null;
+    }
+  }, []);
+
+  // prettier-ignore
+  const onInit = useCallback((options: Partial<EzopenPlayerProps> = {}) => {
+    options = { ...ezopenOptions, ...options };
+      onDestroy()
+      // ezuikit.js 是 UMD 规范的文件, 会挂载到 window.EZUIKit 上, 需要确保全局唯一加载
+      AppendJS.loadScript((options.entryPath) +'ezuikit.js').then(() => {
+        if (!player.current && options.url && options.id && (options.accessToken || options.token)) {
+          const opt = { ...options };
+          player.current = new window.EZUIKit.EZUIKitPlayer(opt);
+        }
+        setEzopenOptions({ ...ezopenOptions, ...options })
+      });
+    },
+    [props.id, props.url, props.accessToken, props.token],
+  );
 
   useEffect(() => {
-    if (!props.id) {
-      throw new Error('id is required!');
-    }
-
-    if (!props.url) {
-      throw new Error('url is required!');
-    }
-
-    if (!(props.accessToken || props.token)) {
-      throw new Error('accessToken or token is required!');
-    }
-    AppendJS.loadScript('./ezuikit.js').then(() => {
-      if (containerRef.current && !player.current) {
-        const opt = { ...DEFAULT_PROPS, ...props };
-        player.current = new window.EZUIKit.EZUIKitPlayer(opt);
-      }
-    });
-
+    onInit();
     return () => {
-      if (player.current) {
-        player.current.destroy?.();
-        player.current = null;
-        console.warn('player destroy');
-      }
+      onDestroy();
     };
-  }, [props.id, props.url, props.accessToken, props.token]);
-  // 添加依赖项
+  }, [onInit]);
 
+  /**
+   * 通过 ref 可以获取播放器实例和控制方法
+   */
   useImperativeHandle(ref, () => ({
     player: () => player.current,
-    stop: () => {
-      if (player.current) {
-        player.current.stop?.();
-      }
-    },
-    play: () => {
-      if (player.current) {
-        player.current.play?.();
-      }
-    },
-    destroy: () => {
-      if (player.current) {
-        player.current.destroy?.();
-        player.current = null;
-      }
-    },
+    init: (options) => onInit(options),
+    stop: () => player.current?.stop?.(),
+    play: () => player.current?.play?.(),
+    openSound: () => player.current?.openSound?.(),
+    closeSound: () => player.current?.closeSound?.(),
+    startSave: () => player.current?.startSave?.(),
+    stopSave: () => player.current?.stopSave?.(),
+    startTalk: () => player.current?.startTalk?.(),
+    stopTalk: () => player.current?.stopTalk?.(),
+    destroy: () => onDestroy(),
   }));
 
   return <div ref={containerRef} id={props.id} className={props.className} style={props.style} />;

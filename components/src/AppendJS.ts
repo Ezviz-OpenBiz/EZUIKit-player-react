@@ -3,10 +3,14 @@
  * @description 支持批量加载，防止重复加载
  * @example
  * ```ts
+ * // 加载单个js/css
  * await AppendJS.loadScript('https://example.com/script.js');
+ * // 批量加载js/css
  * await AppendJS.loadScriptsBatch(['https://example.com/script1.js', 'https://example.com/style.css']);
+ * // 移除已加载的js/css
  * AppendJS.remove(['https://example.com/script.js']);
- * AppendJS.clear(); // 清除所有加载的js/css
+ * // 清空所有已加载的js/css
+ * AppendJS.clear();
  * ```
  */
 export class AppendJS {
@@ -23,6 +27,8 @@ export class AppendJS {
 
       if (AppendJS.LoadingScrQueue[src]) {
         AppendJS.LoadingScrQueue[src].push(resolve);
+        // 不要多次创建链接
+        return;
       } else {
         AppendJS.LoadingScrQueue[src] = [resolve];
       }
@@ -43,7 +49,8 @@ export class AppendJS {
         AppendJS.LoadingScrQueue[src].forEach((resolve) => resolve(src));
         AppendJS.LoadingScrQueue[src] = [];
       };
-      (link as HTMLScriptElement | HTMLLinkElement).onerror = () => reject(new Error('Failed to load ' + src));
+
+      (link as HTMLScriptElement | HTMLLinkElement).onerror = () => reject(new Error('AppendJS failed to load ' + src));
       document.head.appendChild(link as HTMLScriptElement | HTMLLinkElement);
     });
   }

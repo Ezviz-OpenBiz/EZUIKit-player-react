@@ -1,77 +1,76 @@
-import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction, useCallback } from 'react';
+import { type EzopenPlayerProps, type EzopenPlayerRef } from '@/interface';
 import { EZUIKitPlayer } from 'ezuikit-js';
-import { EzopenPlayerProps } from '@/interface';
-
-export interface EzopenPlayerRef {
-  player: () => EZUIKitPlayer | null;
-  play: () => void;
-  stop: () => void;
-  destroy: () => void;
-}
 
 const DEFAULT_PROPS = {
+  language: 'zh' as EzopenPlayerProps['language'],
+  entryPath: './',
   staticPath: './ezuikit_static',
 };
 
 // 使用 ForwardRefRenderFunction 明确类型
+/**
+ * 适用于通过 npm 安装 ezuikit-js 的场景
+ * 1. 需确保 ezuikit_static 目录下的文件可访问（复制 ezuikit_static 文件夹到静态资源目录下）
+ * @param {EzopenPlayerProps} props - 播放器配置项
+ * @param { EzopenPlayerRef } ref - 通过 ref 可以获取播放器实例和控制方法
+ * @returns React 组件
+ */
 const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlayerProps> = (props, ref) => {
   const player = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [ezopenOptions, setEzopenOptions] = React.useState<Partial<EzopenPlayerProps>>({ ...DEFAULT_PROPS, ...props });
+
+  const onDestroy = useCallback(() => {
+    if (player.current) {
+      player.current.destroy?.();
+      player.current = null;
+    }
+  }, []);
+
+  // prettier-ignore
+  const onInit = useCallback((options: Partial<EzopenPlayerProps> = {}) => {
+    options = { ...ezopenOptions, ...options };
+      onDestroy()
+      if (!player.current && options.url && options.id && (options.accessToken || options.token)) {
+        const opt = { ...options };
+        player.current = new EZUIKitPlayer(opt);
+      }
+      setEzopenOptions({ ...ezopenOptions, ...options })
+    },
+    [props.id, props.url, props.accessToken, props.token],
+  );
 
   useEffect(() => {
-    if (!props.id) {
-      throw new Error('id is required!');
-    }
-
-    if (!props.url) {
-      throw new Error('url is required!');
-    }
-
-    if (!(props.accessToken || props.token)) {
-      throw new Error('accessToken or token is required!');
-    }
-
-    if (containerRef.current && !player.current) {
-      const opt = { ...DEFAULT_PROPS, ...props };
-      player.current = new EZUIKitPlayer(opt);
-    }
-
+    onInit();
     return () => {
-      if (player.current) {
-        player.current.destroy?.();
-        player.current = null;
-        console.warn('player destroy');
-      }
+      onDestroy();
     };
-  }, [props.id, props.url, props.accessToken, props.token]);
-  // 添加依赖项
+  }, [onInit]);
 
+  /**
+   * 通过 ref 可以获取播放器实例和控制方法
+   */
   useImperativeHandle(ref, () => ({
     player: () => player.current,
-    stop: () => {
-      if (player.current) {
-        player.current.stop?.();
-      }
-    },
-    play: () => {
-      if (player.current) {
-        player.current.play?.();
-      }
-    },
-    destroy: () => {
-      if (player.current) {
-        player.current.destroy?.();
-        player.current = null;
-      }
-    },
+    init: (options) => onInit(options),
+    stop: () => player.current?.stop?.(),
+    play: () => player.current?.play?.(),
+    openSound: () => player.current?.openSound?.(),
+    closeSound: () => player.current?.closeSound?.(),
+    startSave: () => player.current?.startSave?.(),
+    stopSave: () => player.current?.stopSave?.(),
+    startTalk: () => player.current?.startTalk?.(),
+    stopTalk: () => player.current?.stopTalk?.(),
+    destroy: () => onDestroy(),
   }));
 
   return <div ref={containerRef} id={props.id} className={props.className} style={props.style} />;
 };
 
 // 使用 React.forwardRef 并明确类型
-const EzopenPlayer = React.forwardRef(EzopenPlayerFunc);
+const EzopenPlayerUmd = React.forwardRef(EzopenPlayerFunc);
 
-EzopenPlayer.displayName = 'EzopenPlayer';
+EzopenPlayerUmd.displayName = 'EzopenPlayerUmd';
 
-export default EzopenPlayer;
+export default EzopenPlayerUmd;
