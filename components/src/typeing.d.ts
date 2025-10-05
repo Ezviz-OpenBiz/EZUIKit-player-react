@@ -7,3 +7,25 @@ declare module 'ezuikit-js' {
     [key: string]: any;
   }
 }
+
+declare global {
+  const EZUIKit: {
+    EZUIKitPlayer: new (options: any) => EZUIKit.EZUIKitPlayer;
+  };
+
+  namespace EZUIKit {
+    interface EZUIKitPlayer {
+      play?: () => void;
+      stop?: () => void;
+      destroy?: () => void;
+    }
+  }
+}
+
+declare const EZUIKit: {
+  EZUIKitPlayer: typeof import('ezuikit-js').EZUIKitPlayer;
+};
+
+interface Window {
+  EZUIKit: EZUIKit;
+}

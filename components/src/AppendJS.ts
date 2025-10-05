@@ -22,7 +22,7 @@ export class AppendJS {
       }
 
       if (AppendJS.LoadingScrQueue[src]) {
-        return AppendJS.LoadingScrQueue[src].push(resolve);
+        AppendJS.LoadingScrQueue[src].push(resolve);
       } else {
         AppendJS.LoadingScrQueue[src] = [resolve];
       }
