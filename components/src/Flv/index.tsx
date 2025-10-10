@@ -1,16 +1,18 @@
 import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction } from 'react';
 import EzuikitFlv from 'ezuikit-flv';
+import './style.css';
 
 /**
  * 播放器组件 Props
  */
 export interface FlvPlayerProps {
   /** 播放器 id, 必须的 */
-  id: string;
+  id?: string;
   /** ezopen 播放地址 */
-  url: string;
+  url?: string;
   /** 取流等操作需要的 token */
   accessToken?: string;
+  /** 是否自动播放，默认 true */
   autoPlay?: boolean;
   /** 播放器容器宽度，单位px */
   width?: number;
@@ -20,8 +22,6 @@ export interface FlvPlayerProps {
   staticPath?: string;
   // /** 语言， 默认 zh, 支持 zh | en  */
   // language?: 'en' | 'zh';
-  // /** 是否是云录制 */
-  // isCloudRecord?: boolean;
   /**
    * 播放器环境配置
    */
@@ -39,6 +39,7 @@ export interface FlvPlayerProps {
 
 export interface FlvPlayerRef {
   player: () => EzuikitFlv | null;
+  init: (options: Partial<FlvPlayerProps>) => void;
   play: () => void;
   pause: () => void;
   destroy: () => void;
@@ -46,11 +47,12 @@ export interface FlvPlayerRef {
 
 const DEFAULT_PROPS = {
   staticPath: './flv_decoder/',
-  autoPlay: false,
+  // autoPlay: true,
+  height: 400,
 };
 
 // 使用 ForwardRefRenderFunction 明确类型
-const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChildren<FlvPlayerProps>> = (props, ref) => {
+const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, FlvPlayerProps> = (props, ref) => {
   const player = useRef<any>(null);
 
   useEffect(() => {
@@ -77,6 +79,9 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, React.PropsWithChild
   useImperativeHandle(ref, () => ({
     player: () => {
       return player.current;
+    },
+    init: (options: Partial<FlvPlayerProps>) => {
+      // 初始化
     },
     pause: () => {
       if (player.current) {

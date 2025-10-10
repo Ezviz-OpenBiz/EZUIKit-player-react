@@ -8,6 +8,9 @@ declare module 'ezuikit-js' {
   }
 }
 
+declare module '*.css';
+declare module '*.scss';
+
 declare global {
   const EZUIKit: {
     EZUIKitPlayer: new (options: any) => EZUIKit.EZUIKitPlayer;

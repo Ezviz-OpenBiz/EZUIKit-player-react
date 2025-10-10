@@ -263,7 +263,7 @@ importers:
         specifier: ^0.13.0
         version: 0.13.0
       qiankun:
-        specifier: ^2.10.12
+        specifier: ^2.10.16
         version: 2.10.16
       react:
         specifier: ^18.2.0

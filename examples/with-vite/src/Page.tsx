@@ -1,6 +1,7 @@
 // WARN：两种方式不可以同时使用，因为会有类的静态属性冲突
 import EzopenPlayerUmdComponent from './EzopenPlayerUmdComponent';
-import EzopenPlayerComponent from './EzopenPlayerComponent';
+// import EzopenPlayerComponent from './EzopenPlayerComponent';
+import FlvPlayerComponent from './FlvPlayerComponent';
 
 const Page = () => {
   return (
@@ -50,6 +51,12 @@ const Page = () => {
           width={600}
           height={400}
           loggerOptions={{ level: 'WARN', name: 'EzopenPlayer', showTime: true }}
+        />
+      </div>
+      <div>
+        <FlvPlayerComponent
+          id="flv-container2"
+          url="https://rtmp05open.ys7.com:9188/v3/openlive/BC7799091_1_1.flv?expire=1786777450&id=878293341244870656&t=f60d6e23c4736a4e66e278964137ec2905349157c41f961ca01bc78534711258&ev=100"
         />
       </div>
     </div>

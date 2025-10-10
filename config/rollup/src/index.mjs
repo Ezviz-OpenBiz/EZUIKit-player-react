@@ -129,7 +129,7 @@ function generateConfig(pkg, configs) {
           sourceMap: isDev,
           extract: false,
           extensions: ['.scss', '.sass', '.css'],
-          include: ['**/*.{scss,sass,css}', 'node_modules/cropperjs/**/*.scss'],
+          include: ['**/*.{scss,sass,css}', 'node_modules'],
           use: [
             [
               'sass',
