@@ -69,8 +69,8 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlayerPr
 };
 
 // 使用 React.forwardRef 并明确类型
-const EzopenPlayerUmd = React.forwardRef(EzopenPlayerFunc);
+const EzopenPlayer = React.forwardRef(EzopenPlayerFunc);
 
-EzopenPlayerUmd.displayName = 'EzopenPlayerUmd';
+EzopenPlayer.displayName = 'EzopenPlayer';
 
-export default EzopenPlayerUmd;
+export default EzopenPlayer;
