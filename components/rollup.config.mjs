@@ -1,5 +1,7 @@
 import generateConfig from '@config/rollup';
-import pkg from './package.json' with { type: 'json' }; // 新版需要改成 with
+import fs from 'fs';
+
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 export default generateConfig({
   ...pkg,
