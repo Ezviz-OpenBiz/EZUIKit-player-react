@@ -84,11 +84,11 @@ function generateConfig(pkg, configs) {
             },
             {
               src: 'node_modules/ezuikit-flv/decoder.*',
-              dest: `dist/flv_decoder`,
+              dest: `dist/ezuikit-flv`,
             },
             {
               src: 'node_modules/@ezuikit/player-hls/dist/decoder.*',
-              dest: `dist/hls_decoder`,
+              dest: `dist/ezuikit-hls`,
             },
           ].filter(Boolean),
           verbose: true, // Output copied items to console.
