@@ -133,6 +133,10 @@ function generateConfig(pkg, configs) {
               dest: `dist/ezuikit_static`,
             },
             {
+              src: 'node_modules/ezuikit-js/ezuikit.js',
+              dest: `dist`,
+            },
+            {
               src: 'node_modules/ezuikit-flv/decoder.*',
               dest: `dist/ezuikit-flv`,
             },
