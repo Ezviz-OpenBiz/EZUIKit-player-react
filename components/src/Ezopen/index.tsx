@@ -51,19 +51,23 @@ const EzopenPlayerFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlayerPr
   /**
    * 通过 ref 可以获取播放器实例和控制方法
    */
-  useImperativeHandle(ref, () => ({
-    player: () => player.current,
-    init: (options) => onInit(options),
-    stop: () => player.current?.stop?.(),
-    play: () => player.current?.play?.(),
-    openSound: () => player.current?.openSound?.(),
-    closeSound: () => player.current?.closeSound?.(),
-    startSave: () => player.current?.startSave?.(),
-    stopSave: () => player.current?.stopSave?.(),
-    startTalk: () => player.current?.startTalk?.(),
-    stopTalk: () => player.current?.stopTalk?.(),
-    destroy: () => onDestroy(),
-  }));
+  useImperativeHandle(
+    ref,
+    () => ({
+      player: () => player.current,
+      init: (options) => onInit(options),
+      stop: () => player.current?.stop?.(),
+      play: () => player.current?.play?.(),
+      openSound: () => player.current?.openSound?.(),
+      closeSound: () => player.current?.closeSound?.(),
+      startSave: () => player.current?.startSave?.(),
+      stopSave: () => player.current?.stopSave?.(),
+      startTalk: () => player.current?.startTalk?.(),
+      stopTalk: () => player.current?.stopTalk?.(),
+      destroy: () => onDestroy(),
+    }),
+    [props, player],
+  );
 
   return <div ref={containerRef} id={props.id} className={props.className} style={props.style} />;
 };
