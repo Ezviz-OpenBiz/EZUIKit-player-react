@@ -1,8 +1,8 @@
 // WARN：两种方式不可以同时使用，因为会有类的静态属性冲突
-// import EzopenPlayerUmdComponent from './EzopenPlayerUmdComponent';
-// import EzopenPlayerComponent from './EzopenPlayerComponent';
-import FlvPlayerComponent from './FlvPlayerComponent';
-import FlvPlayerUmdComponent from './FlvPlayerUmdComponent';
+// import EzopenPlayerUmdComponent from './components/EzopenPlayerUmdComponent';
+// import EzopenPlayerComponent from './components/EzopenPlayerComponent';
+import FlvPlayerComponent from './components/FlvPlayerComponent';
+import FlvPlayerUmdComponent from './components/FlvPlayerUmdComponent';
 
 const Page = () => {
   return (

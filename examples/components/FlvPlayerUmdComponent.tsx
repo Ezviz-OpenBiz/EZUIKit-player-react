@@ -1,6 +1,5 @@
-import { type FlvPlayerProps, FlvPlayer, type FlvPlayerRef } from '@ezuikit/player-react';
-import { useRef, useState } from 'react';
-import { useCallback } from 'react';
+import { type FlvPlayerProps, FlvPlayerUmd, type FlvPlayerRef } from '@ezuikit/player-react';
+import { useRef, useState, useCallback } from 'react';
 
 /**
  * 使用 NPM 方式加载播放器
@@ -9,36 +8,33 @@ import { useCallback } from 'react';
  */
 const FlvPlayerComponent = (props: FlvPlayerProps) => {
   const playerRef = useRef<FlvPlayerRef>(null);
-  const [options, setOptions] = useState<Partial<FlvPlayerProps>>({ ...props });
+  const [options, setOptions] = useState<FlvPlayerProps>({ ...props });
 
   const urlRef = useRef<HTMLInputElement>(null);
   const accessTokenRef = useRef<HTMLInputElement>(null);
   const staticPathRef = useRef<HTMLInputElement>(null);
-  const templateRef = useRef<HTMLInputElement>(null);
   const languageRef = useRef<HTMLInputElement>(null);
   const widthRef = useRef<HTMLInputElement>(null);
   const heightRef = useRef<HTMLInputElement>(null);
-  const isCloudRecordRef = useRef<HTMLInputElement>(null);
 
   /**
    * 初始化Flv播放器
    */
   const handleInit = useCallback(() => {
     if (/^https:\/\//.test(urlRef.current?.value?.trim?.() ?? '')) {
-      // @ts-ignore
-      options.url = urlRef.current.value.trim?.();
+      options.url = urlRef.current?.value.trim?.();
     }
     if (accessTokenRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.accessToken = accessTokenRef.current.value.trim?.();
+      options.accessToken = accessTokenRef.current?.value.trim?.();
     }
     if (staticPathRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.staticPath = staticPathRef.current.value.trim?.();
+      options.staticPath = staticPathRef.current?.value.trim?.();
     }
+    options.width = (widthRef.current?.value || '600').trim?.();
+    options.height = (heightRef.current?.value || '400').trim?.();
+
     if (languageRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.language = languageRef.current.value.trim?.();
+      options.language = (languageRef.current?.value.trim?.() || 'zh') as FlvPlayerProps['language'];
     }
 
     setOptions({ ...options });
@@ -53,14 +49,6 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
     // 停止播放
     playerRef.current?.pause();
   }, []);
-  // const handleOpenSound = useCallback(() => {
-  //   // 打开声音
-  //   playerRef.current?.openSound();
-  // }, []);
-  // const handleCloseSound = useCallback(() => {
-  //   // 关闭声音
-  //   playerRef.current?.closeSound();
-  // }, []);
 
   const handleDestroy = useCallback(() => {
     // 销毁
@@ -70,7 +58,7 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
   return (
     <div>
       <div>
-        <FlvPlayer {...(options as FlvPlayerProps)} ref={playerRef} />
+        <FlvPlayerUmd {...options} ref={playerRef} />
       </div>
       <div>
         <div>
@@ -92,7 +80,7 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
           <input type="text" ref={heightRef} defaultValue={400} placeholder="height" style={{ width: 500, marginBottom: 10 }} />
         </div>
         <div>
-          <input type="text" ref={staticPathRef} defaultValue="./ezuikit-flv" placeholder="staticPath" style={{ width: 500, marginBottom: 10 }} />
+          <input type="text" ref={staticPathRef} defaultValue="./ezuikit-flv/" placeholder="staticPath" style={{ width: 500, marginBottom: 10 }} />
         </div>
         <div>
           <input type="text" ref={languageRef} defaultValue="zh" placeholder="language" style={{ width: 500, marginBottom: 10 }} />
@@ -110,12 +98,6 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
           <button type="button" onClick={handleDestroy}>
             销毁
           </button>
-          {/* <button type="button" onClick={handleOpenSound}>
-            打开声音
-          </button>
-          <button type="button" onClick={handleCloseSound}>
-            关闭声音
-          </button> */}
         </div>
       </div>
     </div>

@@ -25,42 +25,29 @@ const EzopenPlayerComponent = (props: EzopenPlayerProps) => {
    */
   const handleInit = useCallback(() => {
     if (/^ezopen:\/\//.test(urlRef.current?.value?.trim?.() ?? '')) {
-      // @ts-ignore
-      options.url = urlRef.current.value.trim?.();
+      options.url = urlRef.current?.value.trim?.();
     }
     if (accessTokenRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.accessToken = accessTokenRef.current.value.trim?.();
+      options.accessToken = accessTokenRef.current?.value.trim?.();
     }
     if (staticPathRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.staticPath = staticPathRef.current.value.trim?.();
+      options.staticPath = staticPathRef.current?.value.trim?.();
     }
     if (templateRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.template = templateRef.current.value.trim?.();
+      options.template = templateRef.current?.value.trim?.();
     }
     if (languageRef.current?.value?.trim?.() ?? '') {
-      // @ts-ignore
-      options.language = languageRef.current.value.trim?.();
+      options.language = languageRef.current?.value.trim?.() as EzopenPlayerProps['language'];
     }
     const w = parseInt((widthRef.current?.value || '600').trim?.(), 10);
     if (!isNaN(w)) {
-      // @ts-ignore
       options.width = w;
     }
     const h = parseInt((heightRef.current?.value || '400').trim?.(), 10);
     if (!isNaN(h)) {
-      // @ts-ignore
       options.height = h;
     }
-    if (isCloudRecordRef.current?.checked) {
-      // @ts-ignore
-      options.isCloudRecord = true;
-    } else {
-      // @ts-ignore
-      options.isCloudRecord = false;
-    }
+    options.isCloudRecord = !!isCloudRecordRef.current?.checked;
 
     setOptions({ ...options });
     // 初始化

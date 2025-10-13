@@ -30,22 +30,13 @@ const FlvPlayerFunc: ForwardRefRenderFunction<FlvPlayerRef, FlvPlayerProps> = (p
   }, [props.id, props.url]); // 添加依赖项
 
   useImperativeHandle(ref, () => ({
-    player: () => {
-      return player.current;
-    },
+    player: () => player.current,
     init: (options: Partial<FlvPlayerProps>) => {
       // 初始化
     },
-    pause: () => {
-      if (player.current) {
-        player.current.pause?.();
-      }
-    },
-    play: () => {
-      if (player.current) {
-        player.current.play?.();
-      }
-    },
+    pause: () => player.current?.pause?.(),
+    setVolume: (volume: number) => player.current?.setVolume?.(volume),
+    play: () => player.current?.play?.(),
     destroy: () => {
       if (player.current) {
         player.current.destroy?.();

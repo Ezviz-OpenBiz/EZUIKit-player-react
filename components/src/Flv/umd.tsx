@@ -61,6 +61,7 @@ const FlvPlayerUmdFunc: ForwardRefRenderFunction<FlvPlayerRef, FlvPlayerProps> =
     init: (options) => onInit(options),
     pause: () => player.current?.pause?.(),
     play: () => player.current?.play?.(),
+    setVolume: (volume: number) => player.current?.setVolume?.(volume),
     destroy: () => onDestroy(),
   }));
 

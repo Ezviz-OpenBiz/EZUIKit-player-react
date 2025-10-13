@@ -1,6 +1,5 @@
 import { type FlvPlayerProps, FlvPlayerUmd, type FlvPlayerRef } from '@ezuikit/player-react';
-import { useRef, useState } from 'react';
-import { useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 /**
  * 使用 NPM 方式加载播放器
@@ -9,7 +8,7 @@ import { useCallback } from 'react';
  */
 const FlvPlayerComponent = (props: FlvPlayerProps) => {
   const playerRef = useRef<FlvPlayerRef>(null);
-  const [options, setOptions] = useState<Partial<FlvPlayerProps>>({ ...props });
+  const [options, setOptions] = useState<FlvPlayerProps>({ ...props });
 
   const urlRef = useRef<HTMLInputElement>(null);
   const accessTokenRef = useRef<HTMLInputElement>(null);
@@ -50,14 +49,6 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
     // 停止播放
     playerRef.current?.pause();
   }, []);
-  // const handleOpenSound = useCallback(() => {
-  //   // 打开声音
-  //   playerRef.current?.openSound();
-  // }, []);
-  // const handleCloseSound = useCallback(() => {
-  //   // 关闭声音
-  //   playerRef.current?.closeSound();
-  // }, []);
 
   const handleDestroy = useCallback(() => {
     // 销毁
@@ -67,7 +58,7 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
   return (
     <div>
       <div>
-        <FlvPlayerUmd {...(options as FlvPlayerProps)} ref={playerRef} />
+        <FlvPlayerUmd {...options} ref={playerRef} />
       </div>
       <div>
         <div>
@@ -107,12 +98,6 @@ const FlvPlayerComponent = (props: FlvPlayerProps) => {
           <button type="button" onClick={handleDestroy}>
             销毁
           </button>
-          {/* <button type="button" onClick={handleOpenSound}>
-            打开声音
-          </button>
-          <button type="button" onClick={handleCloseSound}>
-            关闭声音
-          </button> */}
         </div>
       </div>
     </div>
