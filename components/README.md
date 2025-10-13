@@ -4,7 +4,7 @@
 
 - 解码资源
 
-  复制 `dist` 下 `ezuikit_static` 、`ezuikit-flv` 和 `ezuikit-hls` 到 react 项目的静态资源目录下
+  复制 `dist` 下 `ezuikit_static` 、`ezuikit.js` 、`ezuikit-flv` 和 `ezuikit-hls` 到 react 项目的静态资源目录下
 
 
 ## 使用

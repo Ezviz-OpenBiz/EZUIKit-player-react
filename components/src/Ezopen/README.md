@@ -4,4 +4,4 @@
 
 - 解码资源
 
-  复制 `dist` 下 `ezuikit_static` 到 react 项目的静态资源目录下
+  复制 `dist` 下 `ezuikit_static` 和 `ezuikit.js` 到 react 项目的静态资源目录下

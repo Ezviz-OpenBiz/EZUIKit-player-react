@@ -12,8 +12,12 @@
 
 - 解码资源
 
-  复制 `dist` 下 `ezuikit_static` 、`flv_decoder` 和 `hls_decoder` 到 react 项目的静态资源目录下
+  复制 `dist` 下 `ezuikit_static` 、`ezuikit.js`、`ezuikit-flv` 和 `ezuikit-hls` 到 react 项目的静态资源目录下
 
-## examples
+### examples
 
--
+- [with-next](./examples/with-next)
+
+- [with-vite](./examples/with-vite)
+
+- [with-webpack](./examples/with-webpack)
