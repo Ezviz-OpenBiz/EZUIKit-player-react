@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction, useCallback } from 'react';
-import { type EzopenPlayerProps, type EzopenPlayerRef } from '@/interface';
+import { type EzopenPlayerProps, type EzopenPlayerRef } from './interface';
 import { EZUIKitPlayer } from 'ezuikit-js';
 
 const DEFAULT_PROPS = {

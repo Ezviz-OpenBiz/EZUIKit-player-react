@@ -26,6 +26,7 @@ export interface EzopenPlayerProps {
   language?: 'en' | 'zh';
   /** 是否是云录制 */
   isCloudRecord?: boolean;
+  themeData?: any;
   /**
    * 播放器环境配置
    */

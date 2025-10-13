@@ -106,7 +106,7 @@ const EzopenPlayerComponent = (props: EzopenPlayerProps) => {
   return (
     <div>
       <div>
-        <EzopenPlayer {...options} ref={playerRef} />
+        <EzopenPlayer {...(options as EzopenPlayerProps)} ref={playerRef} />
       </div>
       <div>
         <div>

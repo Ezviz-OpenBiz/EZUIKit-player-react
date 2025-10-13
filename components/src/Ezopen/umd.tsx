@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, ForwardRefRenderFunction, useCallback } from 'react';
-import { type EzopenPlayerProps, type EzopenPlayerRef } from '@/interface';
+import { type EzopenPlayerProps, type EzopenPlayerRef } from './interface';
 import AppendJS from '../AppendJS';
 
 const DEFAULT_PROPS = {
@@ -35,10 +35,10 @@ const EzopenPlayerUmdFunc: ForwardRefRenderFunction<EzopenPlayerRef, EzopenPlaye
     options = { ...ezopenOptions, ...options };
       onDestroy()
       // ezuikit.js 是 UMD 规范的文件, 会挂载到 window.EZUIKit 上, 需要确保全局唯一加载
-      AppendJS.loadScript((options.entryPath) +'ezuikit.js').then(() => {
+      AppendJS.loadScript((options.entryPath) +'/ezuikit.js').then(() => {
         if (!player.current && options.url && options.id && (options.accessToken || options.token)) {
           const opt = { ...options };
-          player.current = new window.EZUIKit.EZUIKitPlayer(opt);
+          if (window.EZUIKit.EZUIKitPlayer) player.current = new window.EZUIKit.EZUIKitPlayer(opt);
         }
         setEzopenOptions({ ...ezopenOptions, ...options })
       });
