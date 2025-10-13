@@ -43,8 +43,58 @@ function generateConfig(pkg, configs) {
   const input = 'src/index.ts';
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const externals = Object.keys(pkg?.dependencies || {});
-
+  // 老版的构建工具不支持 esm, 如 webpack@4
   const defaultConfigs = [
+    // ezopen
+    {
+      input: 'src/Ezopen/index.tsx',
+      output: [
+        {
+          exports: 'named',
+          file: 'dist/Ezopen/index.mjs',
+          format: 'esm',
+          sourcemap: isDev,
+          banner,
+        },
+      ],
+    },
+    {
+      input: 'src/Ezopen/umd.tsx',
+      output: [
+        {
+          exports: 'named',
+          file: 'dist/Ezopen/umd.js',
+          format: 'cjs',
+          sourcemap: isDev,
+          banner,
+        },
+      ],
+    },
+    // flv
+    {
+      input: 'src/Flv/index.tsx',
+      output: [
+        {
+          exports: 'named',
+          file: 'dist/Flv/index.mjs',
+          format: 'esm',
+          sourcemap: isDev,
+          banner,
+        },
+      ],
+    },
+    {
+      input: 'src/Flv/umd.tsx',
+      output: [
+        {
+          exports: 'named',
+          file: 'dist/Flv/umd.js',
+          format: 'cjs',
+          sourcemap: isDev,
+          banner,
+        },
+      ],
+    },
     {
       input,
       output: [
@@ -84,6 +134,10 @@ function generateConfig(pkg, configs) {
             },
             {
               src: 'node_modules/ezuikit-flv/decoder.*',
+              dest: `dist/ezuikit-flv`,
+            },
+            {
+              src: 'node_modules/ezuikit-flv/index.js',
               dest: `dist/ezuikit-flv`,
             },
             {
