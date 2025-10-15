@@ -4,8 +4,8 @@ import { EZUIKitPlayer } from 'ezuikit-js';
 
 const DEFAULT_PROPS = {
   language: 'zh' as EzopenPlayerProps['language'],
-  entryPath: './',
-  staticPath: './ezuikit_static',
+  entryPath: '',
+  staticPath: '/ezuikit_static',
 };
 
 // 使用 ForwardRefRenderFunction 明确类型

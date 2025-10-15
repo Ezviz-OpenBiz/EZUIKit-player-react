@@ -17,7 +17,7 @@ const FlvPlayerUmdFunc: ForwardRefRenderFunction<FlvPlayerRef, FlvPlayerProps> =
   const player = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [ezopenOptions, setEzopenOptions] = React.useState<Partial<FlvPlayerProps>>({
-    entryPath: './ezuikit-flv',
+    entryPath: '/ezuikit-flv',
     ...FLV_DEFAULT_PROPS,
     ...props,
   });

@@ -18,7 +18,7 @@ export interface EzopenPlayerProps {
   height?: number;
   /** 播放器模板 pcLive | pcRec | mobileLive | mobileRec */
   template?: string;
-  /** ezuikit.js 入口文件路径, 默认是 ./ */
+  /** ezuikit.js 入口文件路径, 默认是 / */
   entryPath?: string;
   /** 解码静态资源路径， 默认是 ./ezuikit_static */
   staticPath?: string;
