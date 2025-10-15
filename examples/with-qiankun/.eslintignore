@@ -1,6 +1,0 @@
-node_modules/
-dist/
-coverage/
-.prettierrc.js
-.eslintrc.js
-env.d.ts
