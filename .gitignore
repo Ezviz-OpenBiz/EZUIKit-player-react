@@ -19,6 +19,10 @@ dist
 dist-ssr
 *.local
 
+.vite
+.next
+out
+
 stats.html
 
 # Editor directories and files
