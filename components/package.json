@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/player-react",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "",
   "main": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
@@ -20,7 +20,7 @@
   "license": "",
   "dependencies": {
     "ezuikit-js": "8.1.15",
-    "ezuikit-flv": "2.0.1",
+    "ezuikit-flv": "2.0.2",
     "@ezuikit/player-hls": "0.1.0"
   },
   "devDependencies": {
