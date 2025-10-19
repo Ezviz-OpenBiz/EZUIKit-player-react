@@ -1,0 +1,44 @@
+{
+  "name": "@ezuikit/player-react",
+  "version": "1.0.0-alpha.5",
+  "description": "",
+  "main": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "module": "dist/index.mjs",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development rollup --config rollup.config.mjs --watch",
+    "build": "npm run clean && cross-env NODE_ENV=production rollup --config rollup.config.mjs",
+    "clean": "rimraf dist"
+  },
+  "keywords": [],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "author": "ShineShao <xiaoshaoqq@gmail.com>",
+  "license": "",
+  "dependencies": {
+    "ezuikit-js": "8.1.15",
+    "ezuikit-flv": "2.0.2",
+    "@ezuikit/player-hls": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.14",
+    "@config/rollup": "workspace:*",
+    "typescript": "5.3.3"
+  },
+  "engines": {
+    "node": ">=16",
+    "react": ">=17"
+  },
+  "resolutions": {
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.14"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
