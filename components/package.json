@@ -37,6 +37,10 @@
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.14"
   },
+ "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-react.git"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
