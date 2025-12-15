@@ -1,6 +1,6 @@
 {
   "name": "@ezuikit/player-react",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "",
   "main": "dist/index.mjs",
   "types": "dist/types/index.d.ts",
@@ -19,7 +19,7 @@
   "author": "ShineShao <xiaoshaoqq@gmail.com>",
   "license": "",
   "dependencies": {
-    "ezuikit-js": "8.1.15",
+    "ezuikit-js": "8.2.1-beta.2",
     "ezuikit-flv": "2.0.2",
     "@ezuikit/player-hls": "0.1.0"
   },
@@ -37,7 +37,7 @@
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.14"
   },
- "repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/Ezviz-OpenBiz/EZUIKit-player-react.git"
   },
